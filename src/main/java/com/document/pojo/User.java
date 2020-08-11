@@ -15,4 +15,12 @@ public class User {
     private String email;
     private String userimgpath;
     private String wechat;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public int getUserid() {
+        return userid;
+    }
 }
