@@ -9,5 +9,5 @@ public interface UserService {
     User getUserByUserName(String username);
     User getUserByUserId(int userid);
     void addUser(String username,String password,String email,String wechat);
-
+    void updateUser(int userid,String email,String wechat,String userimgpath);
 }

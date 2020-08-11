@@ -28,9 +28,10 @@ public class LoginController {
         UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(username,password);
         try {
             subject.login(usernamePasswordToken);
-            Cookie cookie = new Cookie("LoginUserId",String.valueOf(userService.getUserByUserName(username).getUserid()));
+            User user = userService.getUserByUserName(username);
+            Cookie cookie = new Cookie("LoginUserId",String.valueOf(user.getUserid()));
             response.addCookie(cookie);
-            return new JsonResult<>("0","登陆成功");
+            return new JsonResult<>(user.getInfo(),"登陆成功");
         }catch (UnknownAccountException e){
             return new JsonResult<>("1","用户名不存在");
         }catch (IncorrectCredentialsException e){

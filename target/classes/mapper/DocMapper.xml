@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.document.mapper.DocMapper">
+
+    <!--addDoc-->
+    <insert id="addDoc" parameterType="map" useGeneratedKeys="true" keyColumn="docid">
+        insert into doc (createtime,userid,title,content,shareperms,teamid,modifytime,status) values (#{createtime},#{userid},#{title},#{content},#{shareperms},#{teamid},#{modifytime},#{status})
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="docid">
+            select last_insert_id() as docid
+        </selectKey>
+    </insert>
+
+    <!--queryDocByDocid-->
+    <select id="queryDocByDocid" resultType="Doc" parameterType="int">
+        select * from doc where docid=#{docid}
+    </select>
+
+
+
+
+</mapper>

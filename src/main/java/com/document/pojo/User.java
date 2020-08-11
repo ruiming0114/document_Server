@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,11 +19,13 @@ public class User {
     private String userimgpath;
     private String wechat;
 
-    public String getPassword() {
-        return password;
-    }
-
-    public int getUserid() {
-        return userid;
+    public Map<String,Object> getInfo(){
+        Map<String,Object> map = new HashMap<>();
+        map.put("userid",userid);
+        map.put("username",username);
+        map.put("email",email);
+        map.put("wechat",wechat);
+        map.put("userimgpath",userimgpath);
+        return map;
     }
 }

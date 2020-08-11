@@ -29,18 +29,18 @@ public class UserServiceImpl implements UserService {
         Map<String,Object> map = new HashMap<>();
         map.put("username",username);
         map.put("password",password);
-        if (email.equals("")){
-            map.put("email",null);
-        }
-        else {
-            map.put("email",email);
-        }
-        if (wechat.equals("")){
-            map.put("wechat",null);
-        }
-        else {
-            map.put("wechat",wechat);
-        }
+        map.put("email",email);
+        map.put("wechat",wechat);
         userMapper.addUser(map);
+    }
+
+    @Override
+    public void updateUser(int userid,String email, String wechat, String userimgpath) {
+        Map<String,Object> map = new HashMap<>();
+        map.put("userid",userid);
+        map.put("email",email);
+        map.put("wechat",wechat);
+        map.put("userimgpath",userimgpath);
+        userMapper.updateUser(map);
     }
 }
