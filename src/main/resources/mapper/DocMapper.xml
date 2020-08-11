@@ -17,6 +17,34 @@
         select * from doc where docid=#{docid}
     </select>
 
+    <!--addHistory-->
+    <insert id="addHistory" parameterType="map">
+        insert into recentread (docid,userid,readtime) values (#{docid},#{userid},#{readtime})
+    </insert>
+
+    <!--replaceHistory-->
+    <insert id="replaceHistory" parameterType="map">
+        insert into recentread(docid, userid, readtime) values (#{docid},#{userid},#{readtime})
+        on duplicate key update
+        readtime=#{readtime}
+    </insert>
+
+    <!--countHistory-->
+    <select id="countHistory" parameterType="map" resultType="int">
+        select count(*) from recentread where userid=#{userid}
+    </select>
+
+    <!--deleteFirstHistory-->
+    <delete id="deleteFirstHistory" parameterType="map">
+        delete from recentread
+        where userid=#{userid} and docid=#{docid} and readtime=(select a.readtime from
+            (select * from recentread a where userid=#{userid} and docid=#{docid} order by readtime limit 1)a)
+    </delete>
+
+    <!--returnFirstHistory-->
+    <select id="returnFirstHistory" parameterType="map" resultType="java.sql.Timestamp">
+        select readtime from recentread a where userid=${userid} and docid=${docid} order by readtime,userid limit 0,1
+    </select>
 
 
 

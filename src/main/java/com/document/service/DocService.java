@@ -7,4 +7,8 @@ import java.util.Map;
 public interface DocService {
 
     void addDoc(int userid,String title,String content,int teamid);
+
+    Doc readDoc(int docid,int userid);
+
+
 }

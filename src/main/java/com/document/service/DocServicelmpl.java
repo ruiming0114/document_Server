@@ -37,4 +37,19 @@ public class DocServicelmpl implements DocService{
         map.put("privateperms",3);
         permsUtilMapper.addPerms(map);
     }
+
+    @Override
+    public Doc readDoc(int docid,int userid) {
+        Timestamp readtime = new Timestamp(System.currentTimeMillis());
+        Map<String,Object> map = new HashMap<>();
+        map.put("docid",docid);
+        map.put("userid",userid);
+        map.put("readtime",readtime);
+        docMapper.replaceHistory(map);
+        /*if (docMapper.countHistory(map)>10){
+
+            //System.out.println(docMapper.returnFirstHistory(map));
+        }*/
+        return docMapper.queryDocByDocid(docid);
+    }
 }
