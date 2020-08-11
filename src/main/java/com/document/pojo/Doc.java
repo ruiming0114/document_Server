@@ -19,7 +19,8 @@ public class Doc {
     private String content;
     private int shareperms;
     private int teamid;
-    private int modifytime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Timestamp modifytime;
     private int status;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Timestamp deletetime;

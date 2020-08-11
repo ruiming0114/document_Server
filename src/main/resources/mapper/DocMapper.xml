@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.document.DocMapper">
+
+    <!--addDoc-->
+    <insert id="addDoc" parameterType="Doc" useGeneratedKeys="true" keyProperty="docid">
+        insert into doc values (#{docid},#{createtime},#{userid},#{title},#{content},#{shareperms},#{teamid},#{modifytime},#{status},#{deletetime})
+    </insert>
+
+
+
+
+</mapper>
