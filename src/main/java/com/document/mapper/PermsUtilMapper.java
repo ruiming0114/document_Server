@@ -8,6 +8,7 @@ import java.util.Map;
 @Mapper
 @Repository
 public interface PermsUtilMapper {
+
     void addPerms(Map<String,Object> map);
 
     void addPermsOfTeam(Map<String,Object> map);
