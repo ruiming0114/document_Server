@@ -2,11 +2,11 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.document.DocMapper">
+<mapper namespace="com.document.mapper.DocMapper">
 
     <!--addDoc-->
-    <insert id="addDoc" parameterType="Doc" useGeneratedKeys="true" keyProperty="docid">
-        insert into doc values (#{docid},#{createtime},#{userid},#{title},#{content},#{shareperms},#{teamid},#{modifytime},#{status},#{deletetime})
+    <insert id="addDoc" parameterType="map" useGeneratedKeys="true" keyColumn="docid">
+        insert into doc (createtime,userid,title,content,shareperms,teamid,modifytime,status) values (#{createtime},#{userid},#{title},#{content},#{shareperms},#{teamid},#{modifytime},#{status})
     </insert>
 
 

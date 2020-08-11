@@ -11,6 +11,7 @@ import org.springframework.web.util.HtmlUtils;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.Map;
 import java.sql.Timestamp;
 
@@ -23,23 +24,24 @@ public class DocController {
 
     //创建文档
     @PostMapping("/addDoc")
-    public JsonResult<Map<String, Object>> addDoc(@RequestParam("title")String title, @RequestParam("content")String content, @RequestParam("teamid")int teamid, HttpServletRequest request) {
+    public JsonResult<Map<String, Object>> addDoc(@RequestParam("title")String title, @RequestParam("content")String content, HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("LoginUserId")) {
-                    Doc doc = new Doc();
+                    Map<String,Object> map= new HashMap<>();
                     Timestamp currentTime = new Timestamp(System.currentTimeMillis());
-                    doc.setCreatetime(currentTime);
-                    doc.setUserid(Integer.parseInt(cookie.getValue()));
-                    doc.setTitle(title);
+                    map.put("createtime",currentTime);
+                    map.put("userid",Integer.parseInt(cookie.getValue()));
+                    map.put("title",title);
                     String temp = HtmlUtils.htmlEscapeHex(content);
-                    doc.setContent(temp);
-                    doc.setShareperms(0);//默认为0
-                    doc.setTeamid(teamid);
-                    doc.setModifytime(currentTime);
-                    doc.setStatus(0);//默认为0
-                    docService.addDoc(doc);
+                    map.put("content",content);
+                    map.put("shareperms",0);//默认分享权限为0
+                    map.put("teamid",-1);
+                    map.put("modifytime",currentTime);
+                    map.put("status",0);//默认0为未删除
+                    map.put("deletetime",null);
+                    docService.addDoc(map);
                     return new JsonResult<>("0", "保存成功");
                 }
             }

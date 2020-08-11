@@ -5,6 +5,8 @@ import com.document.pojo.Doc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
+
 @Service
 public class DocServicelmpl implements DocService{
 
@@ -12,7 +14,7 @@ public class DocServicelmpl implements DocService{
     private DocMapper docMapper;
 
     @Override
-    public void addDoc(Doc doc) {
-        docMapper.addDoc(doc);
+    public void addDoc(Map<String,Object> map) {
+        docMapper.addDoc(map);
     }
 }

@@ -2,7 +2,9 @@ package com.document.service;
 
 import com.document.pojo.Doc;
 
+import java.util.Map;
+
 public interface DocService {
 
-    void addDoc(Doc doc);
+    void addDoc(Map<String,Object> map);
 }
