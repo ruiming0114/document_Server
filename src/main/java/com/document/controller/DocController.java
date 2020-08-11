@@ -65,8 +65,25 @@ public class DocController {
         return new JsonResult<>("1", "用户未登录");
     }
 
-   /* //编辑文档
+    //编辑文档
     @PostMapping("writeDoc")
-    public JsonResult<Map<String,Object>> writeDoc(@RequestParam())*/
+    public JsonResult<Map<String,Object>> writeDoc(@RequestParam("docid")int docid,@RequestParam("title") String title, @RequestParam(value = "content", required = false) String content,HttpServletRequest request){
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("LoginUserId")) {
+                    int userid = Integer.parseInt(cookie.getValue());
+                    if (permsUtilService.canWrite(docid, userid)) {
+                        String temp = HtmlUtils.htmlEscapeHex(content);
+                        docService.writeDoc(docid,title,temp);
+                        return new JsonResult<>();
+                    } else {
+                        return new JsonResult<>("2", "没有权限");
+                    }
+                }
+            }
+        }
+        return new JsonResult<>("1", "用户未登录");
+    }
 
 }

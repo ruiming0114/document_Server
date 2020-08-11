@@ -52,4 +52,16 @@ public class DocServicelmpl implements DocService{
         }*/
         return docMapper.queryDocByDocid(docid);
     }
+
+    @Override
+    public void writeDoc(int docid, String title, String content) {
+        Map<String,Object> map= new HashMap<>();
+        map.put("docid",docid);
+        map.put("title",title);
+        map.put("content",content);
+        Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+        map.put("modifytime",currentTime);
+        docMapper.writeDoc(map);
+
+    }
 }

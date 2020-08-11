@@ -46,6 +46,10 @@
         select readtime from recentread a where userid=${userid} and docid=${docid} order by readtime,userid limit 0,1
     </select>
 
-
+    <!--writeDoc-->
+    <update id="writeDoc" parameterType="map">
+        update doc set title=#{title},content=#{content},modifytime=#{modifytime}
+        where docid=#{docid}
+    </update>
 
 </mapper>

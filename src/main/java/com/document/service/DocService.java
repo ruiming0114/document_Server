@@ -10,5 +10,5 @@ public interface DocService {
 
     Doc readDoc(int docid,int userid);
 
-
+    void writeDoc(int docid,String title,String content);
 }

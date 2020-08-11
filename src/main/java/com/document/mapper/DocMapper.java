@@ -26,4 +26,6 @@ public interface DocMapper {
     void deleteFirstHistory(Map<String,Object> map);
 
     Timestamp returnFirstHistory(Map<String,Object> map);
+
+    void writeDoc(Map<String,Object> map);
 }
