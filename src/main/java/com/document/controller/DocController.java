@@ -2,20 +2,20 @@ package com.document.controller;
 
 import com.document.pojo.Doc;
 import com.document.pojo.JsonResult;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.HtmlUtils;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 import java.util.Map;
 import java.sql.Timestamp;
 
 public class DocController {
 
     //创建文档
-    @RequestMapping("/addDoc")
-    public JsonResult<Map<String, Object>> addDoc(String title, String content, int teamid, HttpServletRequest request) {
+    @PostMapping("/addDoc")
+    public JsonResult<Map<String, Object>> addDoc(@RequestParam("title")String title, @RequestParam("content")String content, @RequestParam("teamid")int teamid, HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
