@@ -1,10 +1,14 @@
 package com.document.service;
 
 import com.document.mapper.DocMapper;
+import com.document.mapper.PermsUtilMapper;
 import com.document.pojo.Doc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.HtmlUtils;
 
+import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.Map;
 
 @Service
@@ -13,8 +17,24 @@ public class DocServicelmpl implements DocService{
     @Autowired
     private DocMapper docMapper;
 
+    @Autowired
+    private PermsUtilMapper permsUtilMapper;
+
     @Override
-    public void addDoc(Map<String,Object> map) {
+    public void addDoc(int userid,String title,String content,int teamid) {
+        Map<String,Object> map= new HashMap<>();
+        Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+        map.put("createtime",currentTime);
+        map.put("userid",userid);
+        map.put("title",title);
+        map.put("content",content);
+        map.put("shareperms",0);//默认分享权限为0
+        map.put("teamid",teamid);
+        map.put("modifytime",currentTime);
+        map.put("status",0);//默认0为未删除
+        map.put("deletetime",null);
         docMapper.addDoc(map);
+        map.put("privateperms",3);
+        permsUtilMapper.addPerms(map);
     }
 }

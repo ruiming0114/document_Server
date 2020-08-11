@@ -6,5 +6,5 @@ import java.util.Map;
 
 public interface DocService {
 
-    void addDoc(Map<String,Object> map);
+    void addDoc(int userid,String title,String content,int teamid);
 }

@@ -33,23 +33,10 @@ public class DocController {
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("LoginUserId")) {
-                    Map<String,Object> map= new HashMap<>();
-                    Map<String,Object> map1 = new HashMap<>();
-                    Timestamp currentTime = new Timestamp(System.currentTimeMillis());
-                    map.put("createtime",currentTime);
-                    map.put("userid",Integer.parseInt(cookie.getValue()));
-                    map.put("title",title);
+                    int userid = Integer.parseInt(cookie.getValue());
                     String temp = HtmlUtils.htmlEscapeHex(content);
-                    map.put("content",temp);
-                    map.put("shareperms",0);//默认分享权限为0
-                    map.put("teamid",-1);
-                    map.put("modifytime",currentTime);
-                    map.put("status",0);//默认0为未删除
-                    map.put("deletetime",null);
-                    docService.addDoc(map);
-                    map.put("privateperms",3);
-                    permsUtilService.addPerms(map);
-
+                    int teamid = -1;
+                    docService.addDoc(userid,title,temp,teamid);
                     return new JsonResult<>("0", "保存成功");
                 }
             }
