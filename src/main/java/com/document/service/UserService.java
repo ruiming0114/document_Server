@@ -8,5 +8,6 @@ public interface UserService {
 
     User getUserByUserName(String username);
     User getUserByUserId(int userid);
-    void addUser(Map<String,Object> map);
+    void addUser(String username,String password,String email,String wechat);
+
 }

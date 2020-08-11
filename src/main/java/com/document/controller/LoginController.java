@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 public class LoginController {
@@ -46,12 +44,7 @@ public class LoginController {
         if (user!=null){
             return new JsonResult<>("1","用户名重复");
         }
-        Map<String,Object> map = new HashMap<>();
-        map.put("username",username);
-        map.put("password",password);
-        map.put("email",email);
-        map.put("wechat",wechat);
-        userService.addUser(map);
+        userService.addUser(username,password,email,wechat);
         return new JsonResult<>("0","注册成功");
     }
 }
