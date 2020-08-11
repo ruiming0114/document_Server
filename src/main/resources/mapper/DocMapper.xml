@@ -7,6 +7,9 @@
     <!--addDoc-->
     <insert id="addDoc" parameterType="map" useGeneratedKeys="true" keyColumn="docid">
         insert into doc (createtime,userid,title,content,shareperms,teamid,modifytime,status) values (#{createtime},#{userid},#{title},#{content},#{shareperms},#{teamid},#{modifytime},#{status})
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="docid">
+            select last_insert_id() as docid
+        </selectKey>
     </insert>
 
 
