@@ -6,15 +6,22 @@ import java.util.Map;
 
 
 public interface PermsUtilService {
-
-    //添加privatePerms
+    //查询个人权限
+    int queryPerms(Map<String,Object> map);
+    //查询队内权限
+    int queryPermsOfTeam(Map<String,Object> map);
+    //添加个人权限
     void addPerms(Map<String,Object> map);
-    //添加teamPerms
+    //添加队内权限
     void addPermsOfTeam(Map<String,Object> map);
-    //修改privatePerms
+    //修改个人权限
     void updatePerms(Map<String,Object> map);
-    //修改privatePerms
+    //修改队内权限
     void updatePermsOfTeam(Map<String,Object> map);
+    //删除个人权限
+    void deletePerms(Map<String,Object> map);
+    //删除队内权限
+    void deletePermsOfTeam(Map<String,Object> map);
 
 
     //个人文章--可读？
