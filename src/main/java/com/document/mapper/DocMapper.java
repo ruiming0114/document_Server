@@ -11,4 +11,8 @@ import java.util.Map;
 public interface DocMapper {
 
     void addDoc(Map<String,Object> map);
+
+    Doc queryDocByDocid(int docid);
+
+
 }

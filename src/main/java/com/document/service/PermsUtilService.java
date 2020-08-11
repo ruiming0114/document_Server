@@ -7,36 +7,32 @@ import java.util.Map;
 
 public interface PermsUtilService {
     //查询个人权限
-    int queryPerms(Map<String,Object> map);
+    int queryPerms(int docid,int userid);
     //查询队内权限
-    int queryPermsOfTeam(Map<String,Object> map);
+    int queryTeamPerms(int teamid, int userid);
     //添加个人权限
-    void addPerms(Map<String,Object> map);
+    void addPerms(int docid,int userid,int privateperms);
     //添加队内权限
-    void addPermsOfTeam(Map<String,Object> map);
+    void addTeamPerms(int teamid, int userid,int teamperms);
     //修改个人权限
-    void updatePerms(Map<String,Object> map);
+    void updatePerms(int docid,int userid,int privateperms);
     //修改队内权限
-    void updatePermsOfTeam(Map<String,Object> map);
+    void updateTeamPerms(int teamid, int userid,int teamperms);
     //删除个人权限
-    void deletePerms(Map<String,Object> map);
+    void deletePerms(int docid,int userid);
     //删除队内权限
-    void deletePermsOfTeam(Map<String,Object> map);
+    void deletePermsOfTeam(int teamid, int userid);
 
+    //判断总权限
+    int returnPerms(int docid,int userid);
 
     //个人文章--可读？
-    boolean canRead(Map<String,Object> map);
-    //团队文章--可读？
-    boolean canReadOfTeam(Map<String,Object> map);
+    boolean canRead(int docid,int userid);
 
     //个人文章--可评论？
-    boolean canComment(Map<String,Object> map);
-    //团队文章--可评论？
-    boolean canCommentOfTeam(Map<String,Object> map);
+    boolean canComment(int docid,int userid);
 
     //个人文章--可写？
-    boolean canWrite(Map<String,Object> map);
-    //团队文章--可写？
-    boolean canWriteOfTeam(Map<String,Object> map);
+    boolean canWrite(int docid,int userid);
 
 }
