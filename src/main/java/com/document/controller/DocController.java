@@ -2,8 +2,11 @@ package com.document.controller;
 
 import com.document.pojo.Doc;
 import com.document.pojo.JsonResult;
+import com.document.service.DocService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.HtmlUtils;
 
 import javax.servlet.http.Cookie;
@@ -11,7 +14,12 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 import java.sql.Timestamp;
 
+
+@RestController
 public class DocController {
+
+    @Autowired
+    private DocService docService;
 
     //创建文档
     @PostMapping("/addDoc")
@@ -31,6 +39,7 @@ public class DocController {
                     doc.setTeamid(teamid);
                     doc.setModifytime(currentTime);
                     doc.setStatus(0);//默认为0
+                    docService.addDoc(doc);
                     return new JsonResult<>("0", "保存成功");
                 }
             }
