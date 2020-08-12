@@ -67,4 +67,9 @@
         select teamid from doc where docid=#{docid}
     </select>
 
+    <!--deleteDoc-->
+    <update id="deleteDoc" parameterType="int">
+        update doc set status=1 where docid=#{docid}
+    </update>
+
 </mapper>

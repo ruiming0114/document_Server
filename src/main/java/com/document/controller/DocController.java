@@ -114,8 +114,7 @@ public class DocController {
                 if (cookie.getName().equals("LoginUserId")) {
                     int userid = Integer.parseInt(cookie.getValue());
                     if (permsUtilService.canDelete(docid, userid)) {
-
-                        //docService.(docid);
+                        docService.deleteDoc(docid);
                         return new JsonResult<>();
                     } else {
                         return new JsonResult<>("2", "没有权限");

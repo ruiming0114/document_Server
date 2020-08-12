@@ -67,6 +67,6 @@ public class DocServicelmpl implements DocService{
 
     @Override
     public void deleteDoc(int docid) {
-
+        docMapper.deleteDoc(docid);
     }
 }

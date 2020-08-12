@@ -120,6 +120,8 @@ public class PermsUtilServicelmpl implements PermsUtilService {
         if(userid==author)
             return true;
         int teamid=docMapper.queryTeamidbyDocid(docid);
+        if(teamid==-1)
+            return false;
         int leaderid=docMapper.queryLeaderidByTeamid(teamid);
         return leaderid == userid;
     }

@@ -34,4 +34,6 @@ public interface DocMapper {
     int queryLeaderidByTeamid(int teamid);
 
     int queryTeamidbyDocid(int docid);
+
+    void deleteDoc(int docid);
 }
