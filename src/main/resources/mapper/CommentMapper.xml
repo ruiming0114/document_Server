@@ -9,5 +9,10 @@
         insert into comment (docid,userid,content,commenttime) values (#{docid},#{userid},#{content},#{commenttime})
     </insert>
 
+    <!--getCommentList-->
+    <select id="getCommentList" parameterType="int" resultType="java.util.HashMap">
+        select comment.userid as userid,user.username as username,user.userimgpath as userimgpath,comment.content as content,comment.commenttime as commenttime
+        from user,comment where comment.docid=#{docid} and user.userid=comment.userid
+    </select>
 
 </mapper>

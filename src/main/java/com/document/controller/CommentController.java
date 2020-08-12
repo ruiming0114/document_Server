@@ -6,6 +6,7 @@ import com.document.service.DocService;
 import com.document.service.PermsUtilService;
 import com.document.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.jws.Oneway;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -46,6 +48,23 @@ public class CommentController {
                     } else {
                         return new JsonResult<>("2", "没有权限");
                     }
+                }
+            }
+        }
+        return new JsonResult<>("1", "用户未登录");
+    }
+
+    //查询评论列表
+    @GetMapping("/getCommentList")
+    public JsonResult<Map<String,Object>> getCommentList(@RequestParam("docid")int docid, HttpServletRequest request){
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("LoginUserId")) {
+                    int userid = Integer.parseInt(cookie.getValue());
+                    Map<String,Object> map = new HashMap<>();
+                    map.put("commentList",commentService.getCommentList(docid));
+                    return new JsonResult<>(map);
                 }
             }
         }
