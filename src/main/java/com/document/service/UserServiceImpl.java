@@ -49,4 +49,9 @@ public class UserServiceImpl implements UserService {
     public List<Map<String, Object>> getRecentReadDoc(int userid) {
         return userMapper.getRecentReadDoc(userid);
     }
+
+    @Override
+    public List<Map<String, Object>> getCollectedDoc(int userid) {
+        return userMapper.getCollectedDoc(userid);
+    }
 }

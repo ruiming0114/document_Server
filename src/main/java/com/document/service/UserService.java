@@ -13,4 +13,5 @@ public interface UserService {
     void updateUser(int userid,String email,String wechat,String userimgpath);
 
     List<Map<String,Object>> getRecentReadDoc(int userid);
+    List<Map<String,Object>> getCollectedDoc(int userid);
 }
