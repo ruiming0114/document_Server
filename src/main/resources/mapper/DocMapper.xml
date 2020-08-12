@@ -52,4 +52,19 @@
         where docid=#{docid}
     </update>
 
+    <!--queryUseridByDocid-->
+    <select id="queryUseridByDocid" parameterType="int" resultType="int">
+        select userid from doc where docid=#{docid}
+    </select>
+
+    <!--queryLeaderidByTeamid-->
+    <select id="queryLeaderidByTeamid" parameterType="int" resultType="int">
+        select leaderid from team where teamid=#{teamid}
+    </select>
+
+    <!--queryTeamidbyDocid-->
+    <select id="queryTeamidbyDocid" parameterType="int" resultType="int">
+        select teamid from doc where docid=#{docid}
+    </select>
+
 </mapper>

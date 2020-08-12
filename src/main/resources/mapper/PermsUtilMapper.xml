@@ -9,8 +9,8 @@
         select IFNULL(MAX(privateperms),0) from perms where docid=#{docid} and userid=#{userid}
     </select>
 
-    <!--queryPermsOfTeam-->
-    <select id="queryPermsOfTeam" resultType="int" parameterType="map">
+    <!--queryTeamPerms-->
+    <select id="queryTeamPerms" resultType="int" parameterType="map">
         select IFNULL(MAX(teamperms),0) from teammember where teamid=#{teamid} and userid=#{userid}
     </select>
 
@@ -19,8 +19,8 @@
         insert into perms (docid,userid,privateperms) values (#{docid},#{userid},#{privateperms})
     </insert>
 
-    <!--addPermsOfTeam-->
-    <insert id="addPermsOfTeam" parameterType="map">
+    <!--addTeamPerms-->
+    <insert id="addTeamPerms" parameterType="map">
         insert into teammember (teamid,userid,teamperms) values (#{teamid},#{userid},#{teamperms})
     </insert>
 
@@ -29,8 +29,8 @@
         update perms set privateperms=#{privateperms} where docid=#{docid} and userid=#{userid}
     </update>
 
-    <!--updatePermsOfTeam-->
-    <update id="updatePermsOfTeam" parameterType="map">
+    <!--updateTeamPerms-->
+    <update id="updateTeamPerms" parameterType="map">
         update teammember set teamperms=#{teamperms} where teamid=#{teamid} and userid=#{userid}
     </update>
 
@@ -39,8 +39,8 @@
         delete from perms where docid=#{docid} and userid = #{userid}
     </delete>
 
-    <!--deletePermsOfTeam-->
-    <delete id="deletePermsOfTeam" parameterType="map">
+    <!--deleteTeamPerms-->
+    <delete id="deleteTeamPerms" parameterType="map">
         delete from perms where teamid=#{teamid} and userid = #{userid}
     </delete>
 

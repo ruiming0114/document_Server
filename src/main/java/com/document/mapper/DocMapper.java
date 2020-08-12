@@ -28,4 +28,10 @@ public interface DocMapper {
     Timestamp returnFirstHistory(Map<String,Object> map);
 
     void writeDoc(Map<String,Object> map);
+
+    int queryUseridByDocid(int docid);
+
+    int queryLeaderidByTeamid(int teamid);
+
+    int queryTeamidbyDocid(int docid);
 }

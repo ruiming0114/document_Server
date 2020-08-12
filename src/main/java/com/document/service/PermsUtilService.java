@@ -26,13 +26,16 @@ public interface PermsUtilService {
     //判断总权限
     int returnPerms(int docid,int userid);
 
-    //个人文章--可读？
+    //文章--可读？
     boolean canRead(int docid,int userid);
 
-    //个人文章--可评论？
+    //文章--可评论？
     boolean canComment(int docid,int userid);
 
-    //个人文章--可写？
+    //文章--可写？
     boolean canWrite(int docid,int userid);
+
+    //文章--可删？
+    boolean canDelete(int docid,int userid);
 
 }

@@ -63,6 +63,10 @@ public class DocServicelmpl implements DocService{
         Timestamp currentTime = new Timestamp(System.currentTimeMillis());
         map.put("modifytime",currentTime);
         docMapper.writeDoc(map);
+    }
+
+    @Override
+    public void deleteDoc(int docid) {
 
     }
 }

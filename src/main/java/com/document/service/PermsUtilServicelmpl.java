@@ -114,4 +114,13 @@ public class PermsUtilServicelmpl implements PermsUtilService {
         return returnPerms(docid, userid) >= 3;
     }
 
+    @Override
+    public boolean canDelete(int docid, int userid) {
+        int author = docMapper.queryUseridByDocid(docid);
+        if(userid==author)
+            return true;
+        int teamid=docMapper.queryTeamidbyDocid(docid);
+        int leaderid=docMapper.queryLeaderidByTeamid(teamid);
+        return leaderid == userid;
+    }
 }
