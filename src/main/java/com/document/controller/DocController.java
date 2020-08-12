@@ -38,6 +38,8 @@ public class DocController {
     //查看文档
     @GetMapping("/readDoc")
     public JsonResult<Map<String, Object>> readDoc(@RequestParam("userid") int userid, @RequestParam(name = "docid") int docid) {
+        if(docService.haveDelete(docid))
+            return new JsonResult<>("2", "文档已被删除！");
         if (permsUtilService.canRead(docid, userid)) {
             Doc doc = docService.readDoc(docid, userid);
             String returnHtml = HtmlUtils.htmlUnescape(doc.getContent());
@@ -100,5 +102,12 @@ public class DocController {
         String returnHtml = HtmlUtils.htmlUnescape((String) map.get("content"));
         map.put("content", returnHtml);
         return new JsonResult<>(map);
+    }
+
+    //修改文章分享权限
+    @PutMapping("/updateSharePerms")
+    public JsonResult<Map<String, Object>> updateSharePerms(@RequestParam("userid") int userid, @RequestParam("docid") int docid,@RequestParam("shareperms")int shareperms) {
+
+        return new JsonResult<>();
     }
 }

@@ -99,4 +99,9 @@ public class DocServicelmpl implements DocService{
         permsUtilMapper.addPerms(map);
         return map;
     }
+
+    @Override
+    public boolean haveDelete(int docid) {
+        return docMapper.getStatus(docid)!=0;
+    }
 }

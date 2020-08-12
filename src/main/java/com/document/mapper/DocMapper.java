@@ -42,4 +42,6 @@ public interface DocMapper {
     String getTitleBytemplateid(int templateid);
 
     String getContentBytemplateid(int templateid);
+
+    int getStatus(int docid);
 }

@@ -17,4 +17,6 @@ public interface DocService {
     void recoverDoc(int docid);
 
     Map<String, Object> addDocByTemplate(int userid, int teamid, int templateid);
+
+    boolean haveDelete(int docid);
 }
