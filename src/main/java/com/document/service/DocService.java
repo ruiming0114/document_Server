@@ -15,4 +15,6 @@ public interface DocService {
     void deleteDoc(int docid);
 
     void recoverDoc(int docid);
+
+
 }

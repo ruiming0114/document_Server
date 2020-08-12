@@ -3,9 +3,12 @@ package com.document.controller;
 import ch.qos.logback.core.joran.conditional.ElseAction;
 import com.document.pojo.Doc;
 import com.document.pojo.JsonResult;
+import com.document.pojo.User;
 import com.document.service.DocService;
 import com.document.service.PermsUtilService;
+import com.document.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.HtmlUtils;
 
@@ -21,6 +24,9 @@ public class DocController {
 
     @Autowired
     private DocService docService;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private PermsUtilService permsUtilService;
@@ -72,8 +78,12 @@ public class DocController {
                     int userid = Integer.parseInt(cookie.getValue());
                     if (permsUtilService.canRead(docid, userid)) {
                         Doc doc = docService.readDoc(docid,userid);
+                        User author = userService.getUserByUserId(doc.getUserid());
                         Map<String, Object> map = new HashMap<>();
-                        map.put("Doc", doc);
+                        map.put("doc", doc);
+                        map.put("authorname",author.getUsername());
+                        map.put("authorimgpath",author.getUserimgpath());
+                        map.put("canComment",permsUtilService.canComment(docid,userid));
                         return new JsonResult<>(map);
                     } else {
                         return new JsonResult<>("2", "没有权限");
@@ -144,5 +154,7 @@ public class DocController {
         }
         return new JsonResult<>("1", "用户未登录");
     }
+
+
 
 }
