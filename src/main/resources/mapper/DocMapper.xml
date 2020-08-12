@@ -77,4 +77,14 @@
         update doc set status=0,deletetime=null where docid=#{docid}
     </update>
 
+    <!--getTitleBytemplateid-->
+    <select id="getTitleBytemplateid" parameterType="int" resultType="String">
+        select title from template where templateid=#{templateid}
+    </select>
+
+    <!--getContentBytemplateid-->
+    <select id="getContentBytemplateid" parameterType="int" resultType="String">
+        select content from template where templateid=#{templateid}
+    </select>
+
 </mapper>

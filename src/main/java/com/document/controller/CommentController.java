@@ -44,7 +44,7 @@ public class CommentController {
 
     //查询评论列表
     @GetMapping("/getCommentList")
-    public JsonResult<Map<String, Object>> getCommentList(@RequestParam("userid") int userid, @RequestParam("docid") int docid) {
+    public JsonResult<Map<String, Object>> getCommentList(@RequestParam("docid") int docid) {
 
         Map<String, Object> map = new HashMap<>();
         map.put("commentList", commentService.getCommentList(docid));

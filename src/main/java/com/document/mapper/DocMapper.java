@@ -38,4 +38,8 @@ public interface DocMapper {
     void deleteDoc(Map<String,Object> map);
 
     void recoverDoc(int docid);
+
+    String getTitleBytemplateid(int templateid);
+
+    String getContentBytemplateid(int templateid);
 }
