@@ -2,6 +2,7 @@ package com.document.service;
 
 import com.document.pojo.User;
 
+import java.util.List;
 import java.util.Map;
 
 public interface UserService {
@@ -10,4 +11,6 @@ public interface UserService {
     User getUserByUserId(int userid);
     void addUser(String username,String password,String email,String wechat);
     void updateUser(int userid,String email,String wechat,String userimgpath);
+
+    List<Map<String,Object>> getRecentReadDoc(int userid);
 }

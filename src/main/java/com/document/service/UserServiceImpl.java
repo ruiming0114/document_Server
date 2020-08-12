@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -42,5 +43,10 @@ public class UserServiceImpl implements UserService {
         map.put("wechat",wechat);
         map.put("userimgpath",userimgpath);
         userMapper.updateUser(map);
+    }
+
+    @Override
+    public List<Map<String, Object>> getRecentReadDoc(int userid) {
+        return userMapper.getRecentReadDoc(userid);
     }
 }

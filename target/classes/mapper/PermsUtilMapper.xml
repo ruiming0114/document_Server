@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.document.mapper.PermsUtilMapper">
+
+    <!--queryPerms-->
+    <select id="queryPerms" resultType="java.lang.Integer" parameterType="map">
+        select IFNULL(MAX(privateperms),0) from perms where docid=#{docid} and userid=#{userid}
+    </select>
+
+    <!--queryTeamPerms-->
+    <select id="queryTeamPerms" resultType="int" parameterType="map">
+        select IFNULL(MAX(teamperms),0) from teammember where teamid=#{teamid} and userid=#{userid}
+    </select>
+
+    <!--addPerms-->
+    <insert id="addPerms" parameterType="map">
+        insert into perms (docid,userid,privateperms) values (#{docid},#{userid},#{privateperms})
+    </insert>
+
+    <!--addTeamPerms-->
+    <insert id="addTeamPerms" parameterType="map">
+        insert into teammember (teamid,userid,teamperms) values (#{teamid},#{userid},#{teamperms})
+    </insert>
+
+    <!--updatePerms-->
+    <update id="updatePerms" parameterType="map">
+        update perms set privateperms=#{privateperms} where docid=#{docid} and userid=#{userid}
+    </update>
+
+    <!--updateTeamPerms-->
+    <update id="updateTeamPerms" parameterType="map">
+        update teammember set teamperms=#{teamperms} where teamid=#{teamid} and userid=#{userid}
+    </update>
+
+    <!--deletePerms-->
+    <delete id="deletePerms" parameterType="map">
+        delete from perms where docid=#{docid} and userid = #{userid}
+    </delete>
+
+    <!--deleteTeamPerms-->
+    <delete id="deleteTeamPerms" parameterType="map">
+        delete from perms where teamid=#{teamid} and userid = #{userid}
+    </delete>
+
+
+</mapper>
