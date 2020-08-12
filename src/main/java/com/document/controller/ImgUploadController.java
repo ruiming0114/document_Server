@@ -1,6 +1,9 @@
 package com.document.controller;
 
 import com.document.pojo.JsonResult;
+import com.document.pojo.User;
+import com.document.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,6 +19,9 @@ import java.util.Map;
 @RestController
 public class ImgUploadController {
 
+    @Autowired
+    UserService userService;
+
     //上传地址
     @Value("/usr/doc-webapp/user_images/")
     //@Value("D:/images/")
@@ -23,7 +29,7 @@ public class ImgUploadController {
 
     // 执行上传
     @PostMapping("/uploadUserImage")
-    public JsonResult<Object> upload(@RequestParam("image") MultipartFile file, HttpServletRequest request) {
+    public JsonResult<Object> upload(@RequestParam("image") MultipartFile file, @RequestParam("userid") int userid, HttpServletRequest request) {
         // 获取上传文件名
         String filename = file.getOriginalFilename();
 
@@ -50,8 +56,9 @@ public class ImgUploadController {
             // 写入文件
             file.transferTo(new File(path + File.separator + filename));
             String url = request.getScheme() + "://" +request.getServerName() + ":" + request.getServerPort() + "/user_images/" + filename;
+            userService.updateUserImage(userid,url);
             Map<String,Object> map  = new HashMap<>();
-            map.put("url",url);
+            map.put("userimgpath",url);
             return new JsonResult<>(map,"上传成功");
         } catch (IOException e) {
             e.printStackTrace();

@@ -1,6 +1,7 @@
 package com.document.controller;
 
 import com.document.pojo.JsonResult;
+import com.document.pojo.User;
 import com.document.service.DocService;
 import com.document.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +28,21 @@ public class UserController {
     }
 
     @PutMapping("/updateUserInfo")
-    public JsonResult<Object> updateUserInfo(@RequestParam("userid") int userid,@RequestParam("email") String email,@RequestParam("wechat") String wechat,@RequestParam("userimgpath") String userimgpath){
-        userService.updateUser(userid,email,wechat,userimgpath);
+    public JsonResult<Object> updateUserInfo(@RequestParam("userid") int userid,@RequestParam("email") String email,@RequestParam("wechat") String wechat){
+        userService.updateUserInfo(userid,email,wechat);
         return new JsonResult<>(userService.getUserByUserId(userid).getInfo(),"修改成功");
+    }
+
+    @PutMapping("/alterPassword")
+    public JsonResult<Object> alterPassword(@RequestParam("userid") int userid,@RequestParam("oldpwd") String oldpwd,@RequestParam("newpwd") String newpwd){
+        User user = userService.getUserByUserId(userid);
+        if (user.getPassword().equals(oldpwd)){
+            userService.updateUserPwd(userid,newpwd);
+            return new JsonResult<>("0","修改成功");
+        }
+        else {
+            return new JsonResult<>("1","密码错误");
+        }
     }
 
     @GetMapping("/getRecentRead")
@@ -46,4 +59,17 @@ public class UserController {
         return new JsonResult<>(map,"操作成功");
     }
 
+    @GetMapping("/getMyDoc")
+    public JsonResult<Object> getMyDoc(@RequestParam("userid") int userid){
+        Map<String,Object> map = new HashMap<>();
+        map.put("mydoclist",userService.getMyDoc(userid));
+        return new JsonResult<>(map,"操作成功");
+    }
+
+    @GetMapping("/getMyDeleteDoc")
+    public JsonResult<Object> getMyDeleteDoc(@RequestParam("userid") int userid){
+        Map<String,Object> map = new HashMap<>();
+        map.put("mydeletelist",userService.getMyDeleteDoc(userid));
+        return new JsonResult<>(map,"操作成功");
+    }
 }

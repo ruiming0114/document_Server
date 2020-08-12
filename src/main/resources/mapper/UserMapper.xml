@@ -17,16 +17,24 @@
     </insert>
 
     <update id="updateUser" parameterType="map">
-        update user set email=#{email}, wechat=#{wechat} , userimgpath=#{userimgpath} where userid=#{userid}
+        update user set email=#{email}, wechat=#{wechat} , userimgpath=#{userimgpath} ,password=#{password} where userid=#{userid}
     </update>
 
     <select id="getRecentReadDoc" parameterType="int" resultType="java.util.HashMap">
-        select doc.docid as docid,doc.title as title,recentread.readtime as readtime from doc,recentread where recentread.docid=doc.docid and recentread.userid=#{userid} order by readtime desc
+        select doc.docid as docid,doc.title as title,recentread.readtime as readtime from doc,recentread where recentread.docid=doc.docid and recentread.userid=#{userid} and doc.status=0 order by readtime desc
     </select>
 
     <select id="getCollectedDoc" parameterType="int" resultType="java.util.HashMap">
-        select doc.docid as docid,doc.title as title where doc.docid=collection.docid and collection.userid=#{userid}
+        select doc.docid as docid,doc.title as title from doc,collection where doc.docid=collection.docid and collection.userid=#{userid} and doc.status=0 order by doc.modifytime desc
     </select>
+
+    <select id="getMyDoc" parameterType="int" resultType="java.util.HashMap">
+        select doc.docid as docid,doc.title as title,doc.modifytime as modifytime from doc where doc.userid=#{userid} and doc.status=0 order by doc.modifytime desc
+    </select>
+
+    <select id="getMyDeleteDoc" parameterType="int" resultType="java.util.HashMap">
+        select doc.docid as docid,doc.title as title,doc.deletetime as deletetime from doc where doc.userid=#{userid} and doc.status=1 order by doc.deletetime desc
+     </select>
 
 
 </mapper>

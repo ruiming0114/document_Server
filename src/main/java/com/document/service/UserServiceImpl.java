@@ -36,12 +36,38 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUser(int userid,String email, String wechat, String userimgpath) {
+    public void updateUserInfo(int userid,String email, String wechat) {
         Map<String,Object> map = new HashMap<>();
         map.put("userid",userid);
         map.put("email",email);
         map.put("wechat",wechat);
+        User user = userMapper.getUserByUserId(userid);
+        map.put("password",user.getPassword());
+        map.put("userimgpath",user.getUserimgpath());
+        userMapper.updateUser(map);
+    }
+
+    @Override
+    public void updateUserImage(int userid, String userimgpath) {
+        Map<String,Object> map = new HashMap<>();
+        map.put("userid",userid);
         map.put("userimgpath",userimgpath);
+        User user = userMapper.getUserByUserId(userid);
+        map.put("email",user.getEmail());
+        map.put("wechat",user.getWechat());
+        map.put("password",user.getUserimgpath());
+        userMapper.updateUser(map);
+    }
+
+    @Override
+    public void updateUserPwd(int userid, String password) {
+        Map<String ,Object> map = new HashMap<>();
+        map.put("userid",userid);
+        map.put("password",password);
+        User user = userMapper.getUserByUserId(userid);
+        map.put("email",user.getEmail());
+        map.put("userimgpath",user.getUserimgpath());
+        map.put("wechat",user.getWechat());
         userMapper.updateUser(map);
     }
 
@@ -53,5 +79,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<Map<String, Object>> getCollectedDoc(int userid) {
         return userMapper.getCollectedDoc(userid);
+    }
+
+    @Override
+    public List<Map<String, Object>> getMyDoc(int userid) {
+        return userMapper.getMyDoc(userid);
+    }
+
+    @Override
+    public List<Map<String, Object>> getMyDeleteDoc(int userid) {
+        return userMapper.getMyDeleteDoc(userid);
     }
 }
