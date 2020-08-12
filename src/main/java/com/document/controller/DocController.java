@@ -25,7 +25,7 @@ public class DocController {
     @Autowired
     private PermsUtilService permsUtilService;
 
-    //创建文档
+/*    //创建文档
     @PostMapping("/addDoc")
     public JsonResult<Map<String, Object>> addDoc(@RequestParam("title") String title, @RequestParam(value = "content", required = false) String content, HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
@@ -37,6 +37,25 @@ public class DocController {
                     int teamid = -1;
                     docService.addDoc(userid, title, temp, teamid);
                     return new JsonResult<>("0", "保存成功");
+                }
+            }
+        }
+        return new JsonResult<>("1", "用户未登录");
+    }*/
+
+    //创建文档
+    @PostMapping("/addDoc")
+    public JsonResult<Map<String, Object>> addDoc(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("LoginUserId")) {
+                    int userid = Integer.parseInt(cookie.getValue());
+                    int teamid = -1;
+                    int docid = docService.addDoc(userid, teamid);
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("docid", docid);
+                    return new JsonResult<>(map);
                 }
             }
         }
@@ -66,7 +85,7 @@ public class DocController {
     }
 
     //编辑文档
-    @PostMapping("writeDoc")
+    @PutMapping("/writeDoc")
     public JsonResult<Map<String,Object>> writeDoc(@RequestParam("docid")int docid,@RequestParam("title") String title, @RequestParam(value = "content", required = false) String content,HttpServletRequest request){
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {

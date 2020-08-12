@@ -21,13 +21,13 @@ public class DocServicelmpl implements DocService{
     private PermsUtilMapper permsUtilMapper;
 
     @Override
-    public void addDoc(int userid,String title,String content,int teamid) {
+    public int addDoc(int userid,int teamid) {
         Map<String,Object> map= new HashMap<>();
         Timestamp currentTime = new Timestamp(System.currentTimeMillis());
         map.put("createtime",currentTime);
         map.put("userid",userid);
-        map.put("title",title);
-        map.put("content",content);
+        map.put("title","无标题");
+        map.put("content","");
         map.put("shareperms",0);//默认分享权限为0
         map.put("teamid",teamid);
         map.put("modifytime",currentTime);
@@ -36,6 +36,7 @@ public class DocServicelmpl implements DocService{
         docMapper.addDoc(map);
         map.put("privateperms",3);
         permsUtilMapper.addPerms(map);
+        return (int)map.get("docid");
     }
 
     @Override
