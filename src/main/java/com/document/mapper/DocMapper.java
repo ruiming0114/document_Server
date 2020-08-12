@@ -35,5 +35,7 @@ public interface DocMapper {
 
     int queryTeamidbyDocid(int docid);
 
-    void deleteDoc(int docid);
+    void deleteDoc(Map<String,Object> map);
+
+    void recoverDoc(int docid);
 }

@@ -13,4 +13,6 @@ public interface DocService {
     void writeDoc(int docid,String title,String content);
 
     void deleteDoc(int docid);
+
+    void recoverDoc(int docid);
 }

@@ -68,8 +68,13 @@
     </select>
 
     <!--deleteDoc-->
-    <update id="deleteDoc" parameterType="int">
-        update doc set status=1 where docid=#{docid}
+    <update id="deleteDoc" parameterType="map">
+        update doc set status=1,deletetime=#{deletetime} where docid=#{docid}
+    </update>
+
+    <!--recoverDoc-->
+    <update id="recoverDoc" parameterType="int">
+        update doc set status=0,deletetime=null where docid=#{docid}
     </update>
 
 </mapper>

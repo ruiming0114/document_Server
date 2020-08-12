@@ -67,6 +67,15 @@ public class DocServicelmpl implements DocService{
 
     @Override
     public void deleteDoc(int docid) {
-        docMapper.deleteDoc(docid);
+        Timestamp deletetime = new Timestamp(System.currentTimeMillis());
+        Map<String,Object> map= new HashMap<>();
+        map.put("docid",docid);
+        map.put("deletetime",deletetime);
+        docMapper.deleteDoc(map);
+    }
+
+    @Override
+    public void recoverDoc(int docid) {
+        docMapper.recoverDoc(docid);
     }
 }

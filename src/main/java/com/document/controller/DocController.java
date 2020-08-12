@@ -125,6 +125,24 @@ public class DocController {
         return new JsonResult<>("1", "用户未登录");
     }
 
-
+    //恢复文档
+    @PutMapping("/recoverDoc")
+    public JsonResult<Map<String,Object>> recoverDoc(@RequestParam("docid")int docid,HttpServletRequest request){
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("LoginUserId")) {
+                    int userid = Integer.parseInt(cookie.getValue());
+                    if (permsUtilService.canDelete(docid, userid)) {
+                        docService.recoverDoc(docid);
+                        return new JsonResult<>();
+                    } else {
+                        return new JsonResult<>("2", "没有权限");
+                    }
+                }
+            }
+        }
+        return new JsonResult<>("1", "用户未登录");
+    }
 
 }
