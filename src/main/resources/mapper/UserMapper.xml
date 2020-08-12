@@ -21,7 +21,12 @@
     </update>
 
     <select id="getRecentReadDoc" parameterType="int" resultType="java.util.HashMap">
-        select doc.docid as docid,doc.title as title,recentread.readtime as readtime from doc,recentread where recentread.docid=doc.docid and recentread.userid=#{userid}
+        select doc.docid as docid,doc.title as title,recentread.readtime as readtime from doc,recentread where recentread.docid=doc.docid and recentread.userid=#{userid} order by readtime desc
     </select>
+
+    <select id="getCollectedDoc" parameterType="int" resultType="java.util.HashMap">
+        select doc.docid as docid,doc.title as title where doc.docid=collection.docid and collection.userid=#{userid}
+    </select>
+
 
 </mapper>

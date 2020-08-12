@@ -18,4 +18,5 @@ public interface UserMapper {
     void updateUser(Map<String,Object> map);
 
     List<Map<String,Object>> getRecentReadDoc(int userid);
+    List<Map<String,Object>> getCollectedDoc(int userid);
 }

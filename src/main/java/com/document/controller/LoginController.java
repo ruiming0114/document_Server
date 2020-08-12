@@ -13,9 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
-
 @RestController
 public class LoginController {
 
@@ -23,14 +20,12 @@ public class LoginController {
     UserService userService;
 
     @PostMapping("/login")
-    public JsonResult<Object> login(@RequestParam("username") String username, @RequestParam("password") String password, HttpServletResponse response){
+    public JsonResult<Object> login(@RequestParam("username") String username, @RequestParam("password") String password){
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(username,password);
         try {
             subject.login(usernamePasswordToken);
             User user = userService.getUserByUserName(username);
-            Cookie cookie = new Cookie("LoginUserId",String.valueOf(user.getUserid()));
-            response.addCookie(cookie);
             return new JsonResult<>(user.getInfo(),"登陆成功");
         }catch (UnknownAccountException e){
             return new JsonResult<>("1","用户名不存在");
