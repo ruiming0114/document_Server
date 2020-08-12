@@ -79,5 +79,26 @@ public class DocServicelmpl implements DocService{
         docMapper.recoverDoc(docid);
     }
 
+    @Override
+    public Map<String, Object> addDocByTemplate(int userid, int teamid, int templateid) {
+        Map<String,Object> map= new HashMap<>();
+        Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+        map.put("createtime",currentTime);
+        map.put("userid",userid);
+        //Map<String,Object> map1 = docMapper.getTemplateBytemplateid(templateid);
+        //String title = (String)map1.get("title");
+        //String content = (String) map1.get("content");
 
+        map.put("title","无标题");
+        map.put("content","");
+        map.put("shareperms",0);//默认分享权限为0
+        map.put("teamid",teamid);
+        map.put("modifytime",currentTime);
+        map.put("status",0);//默认0为未删除
+        map.put("deletetime",null);
+        docMapper.addDoc(map);
+        map.put("privateperms",3);
+        permsUtilMapper.addPerms(map);
+        return map;
+    }
 }

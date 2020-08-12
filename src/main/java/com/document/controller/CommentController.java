@@ -11,9 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.jws.Oneway;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,44 +29,26 @@ public class CommentController {
     @Autowired
     private PermsUtilService permsUtilService;
 
-
-
     //添加评论
     @PostMapping("/addComment")
-    public JsonResult<Map<String,Object>> addComment(@RequestParam("docid")int docid, @RequestParam("content")String content, HttpServletRequest request){
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("LoginUserId")) {
-                    int userid = Integer.parseInt(cookie.getValue());
-                    if (permsUtilService.canComment(docid, userid)) {
-                        commentService.addComment(docid,userid,content);
-                        return new JsonResult<>();
-                    } else {
-                        return new JsonResult<>("2", "没有权限");
-                    }
-                }
-            }
+    public JsonResult<Map<String, Object>> addComment(@RequestParam("userid") int userid, @RequestParam("docid") int docid, @RequestParam("content") String content) {
+
+        if (permsUtilService.canComment(docid, userid)) {
+            commentService.addComment(docid, userid, content);
+            return new JsonResult<>();
+        } else {
+            return new JsonResult<>("1", "没有权限");
         }
-        return new JsonResult<>("1", "用户未登录");
+
     }
 
     //查询评论列表
     @GetMapping("/getCommentList")
-    public JsonResult<Map<String,Object>> getCommentList(@RequestParam("docid")int docid, HttpServletRequest request){
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("LoginUserId")) {
-                    int userid = Integer.parseInt(cookie.getValue());
-                    Map<String,Object> map = new HashMap<>();
-                    map.put("commentList",commentService.getCommentList(docid));
-                    return new JsonResult<>(map);
-                }
-            }
-        }
-        return new JsonResult<>("1", "用户未登录");
+    public JsonResult<Map<String, Object>> getCommentList(@RequestParam("userid") int userid, @RequestParam("docid") int docid) {
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("commentList", commentService.getCommentList(docid));
+        return new JsonResult<>(map);
+
     }
-
-
 }
