@@ -92,17 +92,17 @@ public class DocController {
 
     }
 
+/*
     //基于模板创建
-    @PostMapping("/addDoc")
+    @PostMapping("/addDocByTemplate")
     public JsonResult<Map<String, Object>> addDocByTemplate(@RequestParam("userid") int userid, @RequestParam("templateid") int templateid) {
 
         int teamid = -1;
         docService.addDocByTemplate(userid, teamid, templateid);
-        //map.put("docid", doc.getDocid());
-        // map.put("title", doc.getTitle());
-        // String returnHtml = HtmlUtils.htmlUnescape(doc.getContent());
-        // map.put("content", returnHtml);
-        // return new JsonResult<>(map);
-        return null;
-    }
+        map.put("docid", doc.getDocid());
+        map.put("title", doc.getTitle());
+        String returnHtml = HtmlUtils.htmlUnescape(doc.getContent());
+        map.put("content", returnHtml);
+        return new JsonResult<>(map);
+    }*/
 }
