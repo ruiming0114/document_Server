@@ -112,4 +112,11 @@
         select userid from collection where userid=#{userid} and docid=#{docid}
     </select>
 
+    <!--replacePermsByUserid-->
+    <insert id="replacePermsByUserid" parameterType="map">
+        insert into perms(docid, userid, privateperms) values (#{docid},#{userid},#{privateperms})
+        on duplicate key update
+        privateperms=#{privateperms}
+    </insert>
+
 </mapper>

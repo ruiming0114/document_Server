@@ -42,7 +42,7 @@ public class DocController {
             return new JsonResult<>("2", "文档已被删除！");
         if (permsUtilService.canRead(docid, userid)) {
             Doc doc = docService.readDoc(docid, userid);
-            boolean haveCollect = docService.haveCollect(docid,userid);
+            boolean haveCollect = docService.haveCollect(docid, userid);
             String returnHtml = HtmlUtils.htmlUnescape(doc.getContent());
             doc.setContent(returnHtml);
             User author = userService.getUserByUserId(doc.getUserid());
@@ -51,7 +51,7 @@ public class DocController {
             map.put("authorname", author.getUsername());
             map.put("authorimgpath", author.getUserimgpath());
             map.put("canComment", permsUtilService.canComment(docid, userid));
-            map.put("haveCollect",haveCollect);
+            map.put("haveCollect", haveCollect);
             return new JsonResult<>(map);
         } else {
             return new JsonResult<>("1", "没有权限");
@@ -148,4 +148,16 @@ public class DocController {
         docService.deleteCollection(userid, docid);
         return new JsonResult<>();
     }
+
+    //通过userid设置权限
+    @PutMapping("/replacePermsByUserid")
+    public JsonResult<Map<String, Object>> replacePermsByUserid(@RequestParam("doid") int doid, @RequestParam("doneid") int doneid, @RequestParam("privateperms") int privateperms, @RequestParam("docid") int docid) {
+        if (permsUtilService.canDelete(docid, doid)) {
+            docService.replacePermsByUserid(docid,doneid,privateperms);
+            return new JsonResult<>();
+        } else {
+            return new JsonResult<>("1", "没有权限");
+        }
+    }
+
 }

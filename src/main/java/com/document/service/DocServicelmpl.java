@@ -124,4 +124,13 @@ public class DocServicelmpl implements DocService {
     public boolean haveCollect(int docid, int userid) {
         return docMapper.haveCollect(docid, userid) != null;
     }
+
+    @Override
+    public void replacePermsByUserid(int docid, int doneid,int privateperms) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("docid",docid);
+        map.put("userid",doneid);
+        map.put("privateperms",privateperms);
+        docMapper.replacePermsByUserid(map);
+    }
 }

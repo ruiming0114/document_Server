@@ -52,4 +52,6 @@ public interface DocMapper {
     void deleteCollection(int userid, int docid);
 
     Integer haveCollect(int docid, int userid);
+
+    void replacePermsByUserid(Map<String, Object> map);
 }
