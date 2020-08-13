@@ -175,11 +175,21 @@ public class DocController {
     //权限用户列表
     @GetMapping("/getPermsList")
     public JsonResult<Map<String, Object>> getPermsList(@RequestParam("docid") int docid) {
-        Map<String,Object> map = new HashMap<>();
-        map.put("onlyCanReadList",docService.getOnlyCanReadList(docid));
-        map.put("onlyCanCommentList",docService.getOnlyCanCommentList(docid));
-        map.put("onlyCanWriteList",docService.getOnlyCanWriteList(docid));
+        Map<String, Object> map = new HashMap<>();
+        map.put("onlyCanReadList", docService.getOnlyCanReadList(docid));
+        map.put("onlyCanCommentList", docService.getOnlyCanCommentList(docid));
+        map.put("onlyCanWriteList", docService.getOnlyCanWriteList(docid));
         return new JsonResult<>(map);
     }
 
+    //根据username查找用户
+    @GetMapping("/getUserByUsername")
+    public JsonResult<Map<String, Object>> getUserByUsername(@RequestParam("username") String username) {
+        User user = userService.getUserByUserName(username);
+        if(user==null)
+            return new JsonResult<>("1","没有符合条件的用户");
+        Map<String, Object> map = new HashMap<>();
+        map.put("user",user.getInfo());
+        return new JsonResult<>(map);
+    }
 }
