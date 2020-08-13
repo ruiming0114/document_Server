@@ -6,12 +6,12 @@
 
     <!--queryPerms-->
     <select id="queryPerms" resultType="java.lang.Integer" parameterType="map">
-        select IFNULL(MAX(privateperms),0) from perms where docid=#{docid} and userid=#{userid}
+        select IFNULL(privateperms,0) from perms where docid=#{docid} and userid=#{userid}
     </select>
 
     <!--queryTeamPerms-->
     <select id="queryTeamPerms" resultType="int" parameterType="map">
-        select IFNULL(MAX(teamperms),0) from teammember where teamid=#{teamid} and userid=#{userid}
+        select IFNULL(teamperms,0) from teammember where teamid=#{teamid} and userid=#{userid}
     </select>
 
     <!--addPerms-->

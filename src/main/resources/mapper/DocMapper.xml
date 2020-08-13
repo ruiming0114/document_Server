@@ -59,7 +59,7 @@
 
     <!--queryLeaderidByTeamid-->
     <select id="queryLeaderidByTeamid" parameterType="int" resultType="int">
-        select IFNULL(MAX(leaderid),0) from team where teamid=#{teamid}
+        select IFNULL(leaderid,0) from team where teamid=#{teamid}
     </select>
 
     <!--queryTeamidbyDocid-->
