@@ -29,4 +29,5 @@ public interface DocService {
     boolean haveCollect(int docid, int userid);
 
     void replacePermsByUserid(int docid, int doneid,int privateperms);
+
 }

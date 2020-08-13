@@ -133,4 +133,5 @@ public class DocServicelmpl implements DocService {
         map.put("privateperms",privateperms);
         docMapper.replacePermsByUserid(map);
     }
+
 }

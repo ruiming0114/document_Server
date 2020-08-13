@@ -6,6 +6,7 @@ import com.document.pojo.User;
 import com.document.service.DocService;
 import com.document.service.PermsUtilService;
 import com.document.service.UserService;
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.HtmlUtils;
@@ -153,11 +154,21 @@ public class DocController {
     @PutMapping("/replacePermsByUserid")
     public JsonResult<Map<String, Object>> replacePermsByUserid(@RequestParam("doid") int doid, @RequestParam("doneid") int doneid, @RequestParam("privateperms") int privateperms, @RequestParam("docid") int docid) {
         if (permsUtilService.canDelete(docid, doid)) {
-            docService.replacePermsByUserid(docid,doneid,privateperms);
+            docService.replacePermsByUserid(docid, doneid, privateperms);
             return new JsonResult<>();
         } else {
             return new JsonResult<>("1", "没有权限");
         }
     }
 
+    //移除privateperms权限
+    @DeleteMapping("/deletePerms")
+    public JsonResult<Map<String, Object>> deletePerms(@RequestParam("doid") int doid, @RequestParam("doneid") int doneid, @RequestParam("docid") int docid) {
+        if (permsUtilService.canDelete(docid, doid)) {
+            permsUtilService.deletePerms(docid, doneid);
+            return new JsonResult<>();
+        } else {
+            return new JsonResult<>("1", "没有权限");
+        }
+    }
 }
