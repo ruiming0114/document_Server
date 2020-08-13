@@ -14,4 +14,13 @@
             select last_insert_id() as teamid
         </selectKey>
     </insert>
+
+    <select id="getTeamMemberList" parameterType="int" resultType="java.util.HashMap">
+        select user.userid as userid,user.username as username,user.userimgpath as userimgpath,teammember.teamperms as teamperms
+            from user,teammember where teammember.teamid=#{teamid} and teammember.userid=user.userid and teammember.teamperms>0
+    </select>
+
+    <select id="getTeamDocList" parameterType="int" resultType="java.util.HashMap">
+        select docid,title,modifytime from doc where teamid=#{teamid} and status=0 order by modifytime desc
+    </select>
 </mapper>

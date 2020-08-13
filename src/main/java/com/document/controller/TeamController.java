@@ -8,6 +8,9 @@ import com.document.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 public class TeamController {
 
@@ -121,5 +124,19 @@ public class TeamController {
                 return new JsonResult<>("1","参数teamperms错误");
             }
         }
+    }
+
+    @GetMapping("/getTeamMemberList")
+    public JsonResult<Object> getTeamMemberList(@RequestParam("teamid") int teamid){
+        Map<String,Object> map = new HashMap<>();
+        map.put("memberlist",teamService.getTeamMemberList(teamid));
+        return new JsonResult<>(map);
+    }
+
+    @GetMapping("/getTeamDocList")
+    public JsonResult<Object> getTeamDocList(@RequestParam("teamid") int teamid){
+        Map<String,Object> map = new HashMap<>();
+        map.put("teamdoclist",teamService.getTeamDocList(teamid));
+        return new JsonResult<>(map);
     }
 }

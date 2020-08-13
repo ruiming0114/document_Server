@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -41,5 +42,15 @@ public class TeamServiceImpl implements TeamService{
     @Override
     public void quitTeam(int userid, int teamid) {
         permsUtilService.deletePermsOfTeam(teamid,userid);
+    }
+
+    @Override
+    public List<Map<String, Object>> getTeamMemberList(int teamid) {
+        return teamMapper.getTeamMemberList(teamid);
+    }
+
+    @Override
+    public List<Map<String, Object>> getTeamDocList(int teamid) {
+        return teamMapper.getTeamDocList(teamid);
     }
 }
