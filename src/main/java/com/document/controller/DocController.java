@@ -38,7 +38,7 @@ public class DocController {
     //查看文档
     @GetMapping("/readDoc")
     public JsonResult<Map<String, Object>> readDoc(@RequestParam("userid") int userid, @RequestParam(name = "docid") int docid) {
-        if(docService.haveDelete(docid))
+        if (docService.haveDelete(docid))
             return new JsonResult<>("2", "文档已被删除！");
         if (permsUtilService.canRead(docid, userid)) {
             Doc doc = docService.readDoc(docid, userid);
@@ -98,7 +98,7 @@ public class DocController {
     @PostMapping("/addDocByTemplate")
     public JsonResult<Map<String, Object>> addDocByTemplate(@RequestParam("userid") int userid, @RequestParam("templateid") int templateid) {
         int teamid = -1;
-        Map<String,Object> map = docService.addDocByTemplate(userid, teamid, templateid);
+        Map<String, Object> map = docService.addDocByTemplate(userid, teamid, templateid);
         String returnHtml = HtmlUtils.htmlUnescape((String) map.get("content"));
         map.put("content", returnHtml);
         return new JsonResult<>(map);
@@ -106,12 +106,30 @@ public class DocController {
 
     //修改文章分享权限
     @PutMapping("/updateSharePerms")
-    public JsonResult<Map<String, Object>> updateSharePerms(@RequestParam("userid") int userid, @RequestParam("docid") int docid,@RequestParam("shareperms")int shareperms) {
-        if(permsUtilService.canShare(docid, userid)){
-            docService.updateSharePerms(docid,shareperms);
+    public JsonResult<Map<String, Object>> updateSharePerms(@RequestParam("userid") int userid, @RequestParam("docid") int docid, @RequestParam("shareperms") int shareperms) {
+        if (permsUtilService.canShare(docid, userid)) {
+            docService.updateSharePerms(docid, shareperms);
             return new JsonResult<>();
-        }else {
+        } else {
             return new JsonResult<>("1", "没有权限");
         }
+    }
+
+    //创建团队文档
+    @PostMapping("/addTeamDoc")
+    public JsonResult<Map<String, Object>> addTeamDoc(@RequestParam("userid") int userid, @RequestParam("teamid") int teamid) {
+        int docid = docService.addDoc(userid, teamid);
+        Map<String, Object> map = new HashMap<>();
+        map.put("docid", docid);
+        return new JsonResult<>(map);
+    }
+
+    //基于模板创建
+    @PostMapping("/addTeamDocByTemplate")
+    public JsonResult<Map<String, Object>> addTeamDocByTemplate(@RequestParam("userid") int userid, @RequestParam("templateid") int templateid, @RequestParam("teamid") int teamid) {
+        Map<String, Object> map = docService.addDocByTemplate(userid, teamid, templateid);
+        String returnHtml = HtmlUtils.htmlUnescape((String) map.get("content"));
+        map.put("content", returnHtml);
+        return new JsonResult<>(map);
     }
 }
