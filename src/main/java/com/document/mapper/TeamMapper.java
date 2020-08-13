@@ -11,6 +11,6 @@ import java.util.Map;
 @Repository
 public interface TeamMapper {
 
-    Team getTeamById(int teamid);
+    Team getTeamByTeamId(int teamid);
     void addTeam(Map<String,Object> map);
 }

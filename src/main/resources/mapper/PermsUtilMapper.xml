@@ -5,13 +5,13 @@
 <mapper namespace="com.document.mapper.PermsUtilMapper">
 
     <!--queryPerms-->
-    <select id="queryPerms" resultType="java.lang.Integer" parameterType="map">
-        select IFNULL(privateperms,0) from perms where docid=#{docid} and userid=#{userid}
+    <select id="queryPerms" resultType="int" parameterType="map">
+        select IFNULL(max(privateperms),0) from perms where docid=#{docid} and userid=#{userid}
     </select>
 
     <!--queryTeamPerms-->
     <select id="queryTeamPerms" resultType="int" parameterType="map">
-        select IFNULL(teamperms,0) from teammember where teamid=#{teamid} and userid=#{userid}
+        select IFNULL(max(teamperms),0) from teammember where teamid=#{teamid} and userid=#{userid}
     </select>
 
     <!--addPerms-->
@@ -41,7 +41,7 @@
 
     <!--deleteTeamPerms-->
     <delete id="deleteTeamPerms" parameterType="map">
-        delete from perms where teamid=#{teamid} and userid = #{userid}
+        delete from teammember where teamid=#{teamid} and userid = #{userid}
     </delete>
 
 

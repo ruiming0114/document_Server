@@ -90,4 +90,14 @@ public class UserServiceImpl implements UserService {
     public List<Map<String, Object>> getMyDeleteDoc(int userid) {
         return userMapper.getMyDeleteDoc(userid);
     }
+
+    @Override
+    public List<Map<String, Object>> getCreatedTeam(int userid) {
+        return userMapper.getCreatedTeam(userid);
+    }
+
+    @Override
+    public List<Map<String, Object>> getJoinedTeam(int userid) {
+        return userMapper.getJoinedTeam(userid);
+    }
 }

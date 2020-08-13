@@ -18,8 +18,8 @@ public class TeamServiceImpl implements TeamService{
     PermsUtilService permsUtilService;
 
     @Override
-    public Team getTeamById(int teamid) {
-        return teamMapper.getTeamById(teamid);
+    public Team getTeamByTeamId(int teamid) {
+        return teamMapper.getTeamByTeamId(teamid);
     }
 
     @Override
@@ -31,5 +31,15 @@ public class TeamServiceImpl implements TeamService{
         teamMapper.addTeam(map);
         permsUtilService.addTeamPerms((Integer) map.get("teamid"),leaderid,3);
         return (int) map.get("teamid");
+    }
+
+    @Override
+    public void joinTeam(int userid, int teamid) {
+        permsUtilService.addTeamPerms(teamid,userid,1);
+    }
+
+    @Override
+    public void quitTeam(int userid, int teamid) {
+        permsUtilService.deletePermsOfTeam(teamid,userid);
     }
 }

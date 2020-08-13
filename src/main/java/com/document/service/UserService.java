@@ -18,4 +18,6 @@ public interface UserService {
     List<Map<String,Object>> getCollectedDoc(int userid);
     List<Map<String,Object>> getMyDoc(int userid);
     List<Map<String,Object>> getMyDeleteDoc(int userid);
+    List<Map<String,Object>> getCreatedTeam(int userid);
+    List<Map<String,Object>> getJoinedTeam(int userid);
 }

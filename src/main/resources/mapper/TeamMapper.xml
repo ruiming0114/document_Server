@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.document.mapper.TeamMapper">
 
-    <select id="getTeamById" parameterType="int" resultType="Team">
+    <select id="getTeamByTeamId" parameterType="int" resultType="Team">
         select * from team where teamid=#{teamid}
     </select>
 
@@ -14,5 +14,4 @@
             select last_insert_id() as teamid
         </selectKey>
     </insert>
-
 </mapper>

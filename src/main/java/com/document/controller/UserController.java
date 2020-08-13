@@ -72,4 +72,19 @@ public class UserController {
         map.put("mydeletelist",userService.getMyDeleteDoc(userid));
         return new JsonResult<>(map,"操作成功");
     }
+
+
+    @GetMapping("/getMyCreatedTeam")
+    public JsonResult<Object> getCreatedTeamList(@RequestParam("userid") int userid){
+        Map<String,Object> map = new HashMap<>();
+        map.put("createlist",userService.getCreatedTeam(userid));
+        return new JsonResult<>(map);
+    }
+
+    @GetMapping("/getMyJoinedTeam")
+    public JsonResult<Object> getJoinedTeamList(@RequestParam("userid") int userid){
+        Map<String,Object> map = new HashMap<>();
+        map.put("joinlist",userService.getJoinedTeam(userid));
+        return new JsonResult<>(map);
+    }
 }

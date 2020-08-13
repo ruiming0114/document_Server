@@ -36,5 +36,11 @@
         select doc.docid as docid,doc.title as title,doc.deletetime as deletetime from doc where doc.userid=#{userid} and doc.status=1 order by doc.deletetime desc
      </select>
 
+    <select id="getCreatedTeam" parameterType="int" resultType="java.util.HashMap">
+        select teamid,teamname from team where leaderid=#{userid}
+    </select>
 
+    <select id="getJoinedTeam" parameterType="int" resultType="java.util.HashMap">
+        select team.teamid as teamid,team.teamname as teamname from team,teammember where team.teamid=teammember.teamid and teammember.userid=#{userid}
+    </select>
 </mapper>
