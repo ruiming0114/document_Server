@@ -36,4 +36,6 @@ public interface DocService {
     List<Map<String,Object>> getOnlyCanCommentList(int docid);
 
     List<Map<String,Object>> getOnlyCanWriteList(int docid);
+
+    void addTemplate(int userid, String title, String content);
 }

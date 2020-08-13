@@ -186,10 +186,30 @@ public class DocController {
     @GetMapping("/getUserByUsername")
     public JsonResult<Map<String, Object>> getUserByUsername(@RequestParam("username") String username) {
         User user = userService.getUserByUserName(username);
-        if(user==null)
-            return new JsonResult<>("1","没有符合条件的用户");
+        if (user == null)
+            return new JsonResult<>("1", "没有符合条件的用户");
         Map<String, Object> map = new HashMap<>();
-        map.put("user",user.getInfo());
+        map.put("user", user.getInfo());
+        return new JsonResult<>(map);
+    }
+
+    //保存模板
+    @PostMapping("/addTemplate")
+    public JsonResult<Map<String, Object>> addTemplate(@RequestParam("userid") int userid, @RequestParam("title") String title, @RequestParam("content") String content) {
+        docService.addTemplate(userid,title,content);
+        return new JsonResult<>("0", "保存成功！");
+    }
+
+    //删除模板
+    @DeleteMapping("/deleteTemplate")
+    public JsonResult<Map<String, Object>> deleteTemplate(@RequestParam("userid") int userid, @RequestParam("templateid") String templateid) {
+        return new JsonResult<>("0", "删除成功！");
+    }
+
+    //获取模板列表
+    @GetMapping("/getTemplateList")
+    public JsonResult<Map<String, Object>> getTemplateList(@RequestParam("userid") int userid) {
+        Map<String,Object> map = new HashMap<>();
         return new JsonResult<>(map);
     }
 }

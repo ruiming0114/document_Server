@@ -137,4 +137,9 @@
         from perms,user where perms.userid=user.userid and perms.docid=#{docid} and perms.privateperms=3
     </select>
 
+    <!--addTemplate-->
+    <insert id="addTemplate" parameterType="map" useGeneratedKeys="true" keyColumn="templateid">
+        insert into template (userid, title, content) values (#{userid},#{title},#{content})
+    </insert>
+
 </mapper>

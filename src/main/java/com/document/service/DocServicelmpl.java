@@ -149,4 +149,13 @@ public class DocServicelmpl implements DocService {
     public List<Map<String, Object>> getOnlyCanWriteList(int docid) {
         return docMapper.getOnlyCanWriteList(docid);
     }
+
+    @Override
+    public void addTemplate(int userid, String title, String content) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("userid",userid);
+        map.put("title",title);
+        map.put("content",content);
+        docMapper.addTemplate(map);
+    }
 }

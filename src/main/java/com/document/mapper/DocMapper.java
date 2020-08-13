@@ -61,4 +61,6 @@ public interface DocMapper {
     List<Map<String, Object>> getOnlyCanCommentList(int docid);
 
     List<Map<String, Object>> getOnlyCanWriteList(int docid);
+
+    void addTemplate(Map<String, Object> map);
 }
