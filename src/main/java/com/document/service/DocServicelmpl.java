@@ -9,6 +9,7 @@ import org.springframework.web.util.HtmlUtils;
 
 import java.sql.Timestamp;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -93,7 +94,7 @@ public class DocServicelmpl implements DocService {
         map.put("teamid", teamid);
         map.put("modifytime", currentTime);
         map.put("status", 0);//默认0为未删除
-        map.put("deletetime", null);
+        map.put("deletetime", "");
         docMapper.addDoc(map);
         map.put("privateperms", 3);
         permsUtilMapper.addPerms(map);
@@ -134,4 +135,18 @@ public class DocServicelmpl implements DocService {
         docMapper.replacePermsByUserid(map);
     }
 
+    @Override
+    public List<Map<String, Object>> getOnlyCanReadList(int docid) {
+        return docMapper.getOnlyCanReadList(docid);
+    }
+
+    @Override
+    public List<Map<String, Object>> getOnlyCanCommentList(int docid) {
+        return docMapper.getOnlyCanCommentList(docid);
+    }
+
+    @Override
+    public List<Map<String, Object>> getOnlyCanWriteList(int docid) {
+        return docMapper.getOnlyCanWriteList(docid);
+    }
 }

@@ -2,6 +2,7 @@ package com.document.service;
 
 import com.document.pojo.Doc;
 
+import java.util.List;
 import java.util.Map;
 
 public interface DocService {
@@ -30,4 +31,9 @@ public interface DocService {
 
     void replacePermsByUserid(int docid, int doneid,int privateperms);
 
+    List<Map<String,Object>> getOnlyCanReadList(int docid);
+
+    List<Map<String,Object>> getOnlyCanCommentList(int docid);
+
+    List<Map<String,Object>> getOnlyCanWriteList(int docid);
 }

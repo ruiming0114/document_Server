@@ -119,4 +119,22 @@
         privateperms=#{privateperms}
     </insert>
 
+    <!--getOnlyCanReadList-->
+    <select id="getOnlyCanReadList" parameterType="int" resultType="java.util.HashMap">
+        select user.userid as userid,user.username as username,user.email as email,user.wechat as wechat,user.userimgpath as userimgpath
+        from perms,user where perms.userid=user.userid and perms.docid=#{docid} and perms.privateperms=1
+    </select>
+
+    <!--getOnlyCanCommentList-->
+    <select id="getOnlyCanCommentList" parameterType="int" resultType="java.util.HashMap">
+        select user.userid as userid,user.username as username,user.email as email,user.wechat as wechat,user.userimgpath as userimgpath
+        from perms,user where perms.userid=user.userid and perms.docid=#{docid} and perms.privateperms=2
+    </select>
+
+    <!--getOnlyCanWriteList-->
+    <select id="getOnlyCanWriteList" parameterType="int" resultType="java.util.HashMap">
+        select user.userid as userid,user.username as username,user.email as email,user.wechat as wechat,user.userimgpath as userimgpath
+        from perms,user where perms.userid=user.userid and perms.docid=#{docid} and perms.privateperms=3
+    </select>
+
 </mapper>

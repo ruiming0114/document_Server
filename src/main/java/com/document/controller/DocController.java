@@ -171,4 +171,15 @@ public class DocController {
             return new JsonResult<>("1", "没有权限");
         }
     }
+
+    //权限用户列表
+    @GetMapping("/getPermsList")
+    public JsonResult<Map<String, Object>> getPermsList(@RequestParam("docid") int docid) {
+        Map<String,Object> map = new HashMap<>();
+        map.put("onlyCanReadList",docService.getOnlyCanReadList(docid));
+        map.put("onlyCanCommentList",docService.getOnlyCanCommentList(docid));
+        map.put("onlyCanWriteList",docService.getOnlyCanWriteList(docid));
+        return new JsonResult<>(map);
+    }
+
 }

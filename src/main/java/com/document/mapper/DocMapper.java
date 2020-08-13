@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.ObjectUtils;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Map;
 
 @Mapper
@@ -54,4 +55,10 @@ public interface DocMapper {
     Integer haveCollect(int docid, int userid);
 
     void replacePermsByUserid(Map<String, Object> map);
+
+    List<Map<String, Object>> getOnlyCanReadList(int docid);
+
+    List<Map<String, Object>> getOnlyCanCommentList(int docid);
+
+    List<Map<String, Object>> getOnlyCanWriteList(int docid);
 }
