@@ -31,4 +31,15 @@ public class CommentServicelmpl implements CommentService {
     public List<Map<String, Object>> getCommentList(int docid) {
         return commentMapper.getCommentList(docid);
     }
+
+    @Override
+    public boolean isHisComment(int userid, int commentid) {
+        int whoComment=commentMapper.queryUseridByCommentid(commentid);
+        return userid==whoComment;
+    }
+
+    @Override
+    public void deleteComment(int commentid) {
+        commentMapper.deleteComment(commentid);
+    }
 }

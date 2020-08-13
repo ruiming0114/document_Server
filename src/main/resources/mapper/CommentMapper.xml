@@ -15,4 +15,15 @@
         from user,comment where comment.docid=#{docid} and user.userid=comment.userid
     </select>
 
+    <!--queryUseridByCommentid-->
+    <select id="queryUseridByCommentid" parameterType="int" resultType="int">
+        select userid from comment where commentid=#{commentid}
+    </select>
+
+    <!--deleteComment-->
+    <delete id="deleteComment" parameterType="int">
+        delete from comment where commentid=#{commentid}
+    </delete>
+
+
 </mapper>

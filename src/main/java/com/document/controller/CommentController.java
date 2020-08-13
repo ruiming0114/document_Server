@@ -6,10 +6,7 @@ import com.document.service.DocService;
 import com.document.service.PermsUtilService;
 import com.document.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -50,5 +47,16 @@ public class CommentController {
         map.put("commentList", commentService.getCommentList(docid));
         return new JsonResult<>(map);
 
+    }
+
+    //删除评论
+    @DeleteMapping("/deleteComment")
+    public JsonResult<Map<String, Object>> deleteComment(@RequestParam("userid")int userid,@RequestParam("commentid")int commentid) {
+        if(commentService.isHisComment(userid,commentid)){
+            commentService.deleteComment(commentid);
+            return new JsonResult<>();
+        }else{
+            return new JsonResult<>("1", "没有权限");
+        }
     }
 }

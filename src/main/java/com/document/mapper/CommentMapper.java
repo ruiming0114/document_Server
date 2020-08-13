@@ -12,4 +12,8 @@ public interface CommentMapper {
     void addComment(Map<String, Object> map);
 
     List<Map<String, Object>> getCommentList(int docid);
+
+    int queryUseridByCommentid(int commentid);
+
+    void deleteComment(int commentid);
 }
