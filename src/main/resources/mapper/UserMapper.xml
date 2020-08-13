@@ -13,7 +13,7 @@
     </select>
 
     <insert id="addUser" parameterType="map" useGeneratedKeys="true" keyColumn="userid">
-        insert into user (username,password,email,wechat) values (#{username},#{password},#{email},#{wechat})
+        insert into user (username,password,email,wechat,userimgpath) values (#{username},#{password},#{email},#{wechat},#{userimgpath})
     </insert>
 
     <update id="updateUser" parameterType="map">

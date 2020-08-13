@@ -5,10 +5,7 @@ import com.document.pojo.User;
 import com.document.service.DocService;
 import com.document.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -86,5 +83,11 @@ public class UserController {
         Map<String,Object> map = new HashMap<>();
         map.put("joinlist",userService.getJoinedTeam(userid));
         return new JsonResult<>(map);
+    }
+
+    @PutMapping("/updateUserImgPath")
+    public JsonResult<Object> updateUserImgPath(@RequestParam("userid") int userid,@RequestParam("userimgpath") String userimgpath){
+        userService.updateUserImage(userid,userimgpath);
+        return new JsonResult<>("0","修改成功");
     }
 }

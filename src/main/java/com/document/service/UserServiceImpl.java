@@ -32,6 +32,7 @@ public class UserServiceImpl implements UserService {
         map.put("password",password);
         map.put("email",email);
         map.put("wechat",wechat);
+        map.put("userimgpath","http://123.56.145.79:8090/user_images/default_userimage.jpg");
         userMapper.addUser(map);
     }
 
@@ -55,7 +56,7 @@ public class UserServiceImpl implements UserService {
         User user = userMapper.getUserByUserId(userid);
         map.put("email",user.getEmail());
         map.put("wechat",user.getWechat());
-        map.put("password",user.getUserimgpath());
+        map.put("password",user.getPassword());
         userMapper.updateUser(map);
     }
 
