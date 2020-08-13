@@ -97,4 +97,19 @@
         update doc set shareperms=#{shareperms} where docid=#{docid}
     </update>
 
+    <!--collectDoc-->
+    <update id="collectDoc" parameterType="int">
+        insert into collection (docid, userid) values (#{docid},#{userid})
+    </update>
+
+    <!--deleteCollection-->
+    <delete id="deleteCollection" parameterType="int">
+        delete from collection where docid=#{docid} and userid=#{userid}
+    </delete>
+
+    <!--haveCollect-->
+    <select id="haveCollect" parameterType="int" resultType="java.lang.Integer">
+        select userid from collection where userid=#{userid} and docid=#{docid}
+    </select>
+
 </mapper>

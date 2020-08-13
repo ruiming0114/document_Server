@@ -42,6 +42,7 @@ public class DocController {
             return new JsonResult<>("2", "文档已被删除！");
         if (permsUtilService.canRead(docid, userid)) {
             Doc doc = docService.readDoc(docid, userid);
+            boolean haveCollect = docService.haveCollect(docid,userid);
             String returnHtml = HtmlUtils.htmlUnescape(doc.getContent());
             doc.setContent(returnHtml);
             User author = userService.getUserByUserId(doc.getUserid());
@@ -50,6 +51,7 @@ public class DocController {
             map.put("authorname", author.getUsername());
             map.put("authorimgpath", author.getUserimgpath());
             map.put("canComment", permsUtilService.canComment(docid, userid));
+            map.put("haveCollect",haveCollect);
             return new JsonResult<>(map);
         } else {
             return new JsonResult<>("1", "没有权限");
@@ -131,5 +133,19 @@ public class DocController {
         String returnHtml = HtmlUtils.htmlUnescape((String) map.get("content"));
         map.put("content", returnHtml);
         return new JsonResult<>(map);
+    }
+
+    //收藏文档
+    @PutMapping("/collectDoc")
+    public JsonResult<Map<String, Object>> collectDoc(@RequestParam("userid") int userid, @RequestParam("docid") int docid) {
+        docService.collectDoc(userid, docid);
+        return new JsonResult<>();
+    }
+
+    //取消收藏
+    @DeleteMapping("/deleteCollection")
+    public JsonResult<Map<String, Object>> deleteCollection(@RequestParam("userid") int userid, @RequestParam("docid") int docid) {
+        docService.deleteCollection(userid, docid);
+        return new JsonResult<>();
     }
 }

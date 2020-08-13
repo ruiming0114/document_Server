@@ -46,4 +46,10 @@ public interface DocMapper {
     int getStatus(int docid);
 
     void updateSharePerms(int docid, int shareperms);
+
+    void collectDoc(int userid, int docid);
+
+    void deleteCollection(int userid, int docid);
+
+    Integer haveCollect(int docid, int userid);
 }

@@ -21,4 +21,10 @@ public interface DocService {
     boolean haveDelete(int docid);
 
     void updateSharePerms(int docid, int shareperms);
+
+    void collectDoc(int userid, int docid);
+
+    void deleteCollection(int userid, int docid);
+
+    boolean haveCollect(int docid, int userid);
 }
