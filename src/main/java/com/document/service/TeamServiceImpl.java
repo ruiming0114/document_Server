@@ -34,8 +34,8 @@ public class TeamServiceImpl implements TeamService{
     }
 
     @Override
-    public void joinTeam(int userid, int teamid) {
-        permsUtilService.addTeamPerms(teamid,userid,1);
+    public void inviteTeamMember(int userid, int teamid) {
+        permsUtilService.addTeamPerms(teamid,userid,-1);
     }
 
     @Override
