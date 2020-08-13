@@ -101,4 +101,25 @@ public class TeamController {
             return new JsonResult<>("0","退出成功");
         }
     }
+
+    @PutMapping("/alterMemberPerms")
+    public JsonResult<Object> alterMemberPerms(@RequestParam("teamid") int teamid,@RequestParam("userid") int userid,@RequestParam("teamperms") int teamperms ){
+        switch (teamperms){
+            case 1:{
+                permsUtilService.updateTeamPerms(teamid,userid,1);
+                return new JsonResult<>("0","修改成功");
+            }
+            case 2:{
+                permsUtilService.updateTeamPerms(teamid,userid,2);
+                return new JsonResult<>("0","修改成功");
+            }
+            case 3:{
+                permsUtilService.updateTeamPerms(teamid,userid,3);
+                return new JsonResult<>("0","修改成功");
+            }
+            default:{
+                return new JsonResult<>("1","参数teamperms错误");
+            }
+        }
+    }
 }
