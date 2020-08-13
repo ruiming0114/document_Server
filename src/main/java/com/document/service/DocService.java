@@ -19,4 +19,6 @@ public interface DocService {
     Map<String, Object> addDocByTemplate(int userid, int teamid, int templateid);
 
     boolean haveDelete(int docid);
+
+    void updateSharePerms(int docid, int shareperms);
 }

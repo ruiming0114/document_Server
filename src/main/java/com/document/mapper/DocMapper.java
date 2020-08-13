@@ -44,4 +44,6 @@ public interface DocMapper {
     String getContentBytemplateid(int templateid);
 
     int getStatus(int docid);
+
+    void updateSharePerms(int docid, int shareperms);
 }

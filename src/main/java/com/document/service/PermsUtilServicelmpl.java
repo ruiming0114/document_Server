@@ -125,4 +125,9 @@ public class PermsUtilServicelmpl implements PermsUtilService {
         int leaderid=docMapper.queryLeaderidByTeamid(teamid);
         return leaderid == userid;
     }
+
+    @Override
+    public boolean canShare(int docid, int userid) {
+        return canDelete(docid,userid);
+    }
 }

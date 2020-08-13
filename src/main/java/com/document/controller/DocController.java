@@ -107,7 +107,11 @@ public class DocController {
     //修改文章分享权限
     @PutMapping("/updateSharePerms")
     public JsonResult<Map<String, Object>> updateSharePerms(@RequestParam("userid") int userid, @RequestParam("docid") int docid,@RequestParam("shareperms")int shareperms) {
-
-        return new JsonResult<>();
+        if(permsUtilService.canShare(docid, userid)){
+            docService.updateSharePerms(docid,shareperms);
+            return new JsonResult<>();
+        }else {
+            return new JsonResult<>("1", "没有权限");
+        }
     }
 }

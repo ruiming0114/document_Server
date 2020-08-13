@@ -38,4 +38,7 @@ public interface PermsUtilService {
     //文章--可删？
     boolean canDelete(int docid,int userid);
 
+    //文章--可分享？
+    boolean canShare(int docid,int userid);
+
 }

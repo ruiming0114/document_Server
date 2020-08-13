@@ -104,4 +104,9 @@ public class DocServicelmpl implements DocService{
     public boolean haveDelete(int docid) {
         return docMapper.getStatus(docid)!=0;
     }
+
+    @Override
+    public void updateSharePerms(int docid, int shareperms) {
+        docMapper.updateSharePerms(docid,shareperms);
+    }
 }

@@ -59,7 +59,7 @@
 
     <!--queryLeaderidByTeamid-->
     <select id="queryLeaderidByTeamid" parameterType="int" resultType="int">
-        select leaderid from team where teamid=#{teamid}
+        select IFNULL(MAX(leaderid),0) from team where teamid=#{teamid}
     </select>
 
     <!--queryTeamidbyDocid-->
@@ -91,5 +91,10 @@
     <select id="getStatus" parameterType="int" resultType="int">
         select status from doc where docid=#{docid}
     </select>
+
+    <!--updateSharePerms-->
+    <update id="updateSharePerms" parameterType="int">
+        update doc set shareperms=#{shareperms} where docid=#{docid}
+    </update>
 
 </mapper>
