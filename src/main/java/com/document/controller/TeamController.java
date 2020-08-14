@@ -139,4 +139,11 @@ public class TeamController {
         map.put("teamdoclist",teamService.getTeamDocList(teamid));
         return new JsonResult<>(map);
     }
+
+    @GetMapping("/getTeamInfo")
+    public JsonResult<Object> getTeamInfo(@RequestParam("teamid") int teamid){
+        Map<String,Object> map = new HashMap<>();
+        map.put("teaminfo",teamService.getTeamByTeamId(teamid));
+        return new JsonResult<>(map);
+    }
 }
