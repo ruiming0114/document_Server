@@ -213,4 +213,9 @@ public class DocServicelmpl implements DocService {
     public void editFinish(int docid, int userid) {
         docMapper.editFinish(docid,userid);
     }
+
+    @Override
+    public List<Map<String, Object>> getModifyList(int docid) {
+        return docMapper.getModifyList(docid);
+    }
 }

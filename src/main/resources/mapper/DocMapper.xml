@@ -183,4 +183,9 @@
         update editrecord set finish=1 where userid=#{userid} and docid=#{docid} and finish=0
     </update>
 
+    <!--getModifyList-->
+    <select id="getModifyList" parameterType="int" resultType="java.util.HashMap">
+        select user.userid as userid,user.username as username,editrecord.modifytime from editrecord,user
+        where editrecord.docid=#{docid} and user.userid=editrecord.userid and finish=1;
+    </select>
 </mapper>

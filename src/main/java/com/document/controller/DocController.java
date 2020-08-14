@@ -44,11 +44,11 @@ public class DocController {
         if (permsUtilService.canRead(docid, userid)) {
             Doc doc = docService.readDoc(docid, userid);
             boolean haveCollect = docService.haveCollect(docid, userid);
-            boolean isEditing=false;
-            Map<String,Object> whoIsEditing=null;
-            if(docService.isEditing(docid)){
-                isEditing=true;
-                whoIsEditing=userService.getUserByUserId(docService.getUseridFromEditrecord(docid)).getInfo();
+            boolean isEditing = false;
+            Map<String, Object> whoIsEditing = null;
+            if (docService.isEditing(docid)) {
+                isEditing = true;
+                whoIsEditing = userService.getUserByUserId(docService.getUseridFromEditrecord(docid)).getInfo();
             }
             String returnHtml = HtmlUtils.htmlUnescape(doc.getContent());
             doc.setContent(returnHtml);
@@ -59,8 +59,8 @@ public class DocController {
             map.put("canComment", permsUtilService.canComment(docid, userid));
             map.put("canWrite", permsUtilService.canWrite(docid, userid));
             map.put("haveCollect", haveCollect);
-            map.put("isEditing",isEditing);
-            map.put("whoIsEditing",whoIsEditing);
+            map.put("isEditing", isEditing);
+            map.put("whoIsEditing", whoIsEditing);
             return new JsonResult<>(map);
         } else {
             return new JsonResult<>("1", "没有权限");
@@ -73,7 +73,7 @@ public class DocController {
         if (permsUtilService.canWrite(docid, userid)) {
             String temp = HtmlUtils.htmlEscapeHex(content);
             docService.saveDoc(docid, title, temp);
-            docService.editFinish(docid,userid);
+            docService.editFinish(docid, userid);
             return new JsonResult<>();
         } else {
             return new JsonResult<>("1", "没有权限");
@@ -239,25 +239,25 @@ public class DocController {
     //根据docid得到创建者信息
     @GetMapping("/getUserByDocid")
     public JsonResult<Map<String, Object>> getUserByDocid(@RequestParam("docid") int docid) {
-        Map<String,Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         User user = docService.getUserByDocid(docid);
-        map.put("user",user.getInfo());
+        map.put("user", user.getInfo());
         return new JsonResult<>(map);
     }
 
     //进入编辑状态
     @PostMapping("/enterEdit")
-    public JsonResult<Map<String, Object>> enterEdit(@RequestParam("userid") int userid,@RequestParam("docid") int docid) {
-        if(permsUtilService.canWrite(docid,userid)){
-            if(docService.isEditing(docid)){
+    public JsonResult<Map<String, Object>> enterEdit(@RequestParam("userid") int userid, @RequestParam("docid") int docid) {
+        if (permsUtilService.canWrite(docid, userid)) {
+            if (docService.isEditing(docid)) {
                 int whoEditing = docService.getUseridFromEditrecord(docid);
                 User user = userService.getUserByUserId(whoEditing);
                 Map<String, Object> map = new HashMap<>();
                 map.put("user", user.getInfo());
                 return new JsonResult<>(map, "2", "有人正在编辑！");
-            }else{
+            } else {
                 Doc doc = docService.readDoc(docid, userid);
-                docService.addEditRecord(docid,userid);
+                docService.addEditRecord(docid, userid);
                 boolean haveCollect = docService.haveCollect(docid, userid);
                 String returnHtml = HtmlUtils.htmlUnescape(doc.getContent());
                 doc.setContent(returnHtml);
@@ -268,9 +268,17 @@ public class DocController {
                 map.put("haveCollect", haveCollect);
                 return new JsonResult<>(map);
             }
-        }else{
+        } else {
             return new JsonResult<>("1", "没有权限！");
         }
+    }
+
+    //修改记录列表
+    @GetMapping("/getModifyList")
+    public JsonResult<Map<String, Object>> enterEdit(@RequestParam("docid") int docid) {
+        Map<String,Object> map = new HashMap<>();
+        map.put("modifyList",docService.getModifyList(docid));
+        return new JsonResult<>(map);
     }
 
 }
