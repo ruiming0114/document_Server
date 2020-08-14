@@ -1,6 +1,7 @@
 package com.document.service;
 
 import com.document.pojo.Doc;
+import com.document.pojo.User;
 
 import java.util.List;
 import java.util.Map;
@@ -11,7 +12,7 @@ public interface DocService {
 
     Doc readDoc(int docid,int userid);
 
-    void writeDoc(int docid,String title,String content);
+    void saveDoc(int docid,String title,String content);
 
     void deleteDoc(int docid);
 
@@ -44,4 +45,14 @@ public interface DocService {
     List<Map<String,Object>> getMyTemplateList(int userid);
 
     Map<String,Object> getTemplateByTemplateid(int templateid);
+
+    User getUserByDocid(int docid);
+
+    void addEditRecord(int docid, int userid);
+
+    boolean isEditing(int docid);
+
+    int getUseridFromEditrecord(int docid);
+
+    void editFinish(int docid, int userid);
 }

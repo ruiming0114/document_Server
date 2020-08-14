@@ -44,15 +44,23 @@ public class DocController {
         if (permsUtilService.canRead(docid, userid)) {
             Doc doc = docService.readDoc(docid, userid);
             boolean haveCollect = docService.haveCollect(docid, userid);
+            boolean isEditing=false;
+            Map<String,Object> whoIsEditing=null;
+            if(docService.isEditing(docid)){
+                isEditing=true;
+                whoIsEditing=userService.getUserByUserId(docService.getUseridFromEditrecord(docid)).getInfo();
+            }
             String returnHtml = HtmlUtils.htmlUnescape(doc.getContent());
             doc.setContent(returnHtml);
-            User author = userService.getUserByUserId(doc.getUserid());
+            User user = userService.getUserByUserId(userid);
             Map<String, Object> map = new HashMap<>();
             map.put("doc", doc);
-            map.put("authorname", author.getUsername());
-            map.put("authorimgpath", author.getUserimgpath());
+            map.put("user", user.getInfo());
             map.put("canComment", permsUtilService.canComment(docid, userid));
+            map.put("canWrite", permsUtilService.canWrite(docid, userid));
             map.put("haveCollect", haveCollect);
+            map.put("isEditing",isEditing);
+            map.put("whoIsEditing",whoIsEditing);
             return new JsonResult<>(map);
         } else {
             return new JsonResult<>("1", "没有权限");
@@ -60,11 +68,12 @@ public class DocController {
     }
 
     //编辑文档
-    @PutMapping("/writeDoc")
-    public JsonResult<Map<String, Object>> writeDoc(@RequestParam("userid") int userid, @RequestParam("docid") int docid, @RequestParam("title") String title, @RequestParam(value = "content", required = false) String content) {
+    @PutMapping("/saveDoc")
+    public JsonResult<Map<String, Object>> saveDoc(@RequestParam("userid") int userid, @RequestParam("docid") int docid, @RequestParam("title") String title, @RequestParam(value = "content", required = false) String content) {
         if (permsUtilService.canWrite(docid, userid)) {
             String temp = HtmlUtils.htmlEscapeHex(content);
-            docService.writeDoc(docid, title, temp);
+            docService.saveDoc(docid, title, temp);
+            docService.editFinish(docid,userid);
             return new JsonResult<>();
         } else {
             return new JsonResult<>("1", "没有权限");
@@ -223,8 +232,45 @@ public class DocController {
     public JsonResult<Map<String, Object>> getTemplateByTemplateid(@RequestParam("templateid") int templateid) {
         Map<String, Object> map = docService.getTemplateByTemplateid(templateid);
         String content = HtmlUtils.htmlUnescape((String) map.get("content"));
-        map.put("content",content);
+        map.put("content", content);
         return new JsonResult<>(map);
+    }
+
+    //根据docid得到创建者信息
+    @GetMapping("/getUserByDocid")
+    public JsonResult<Map<String, Object>> getUserByDocid(@RequestParam("docid") int docid) {
+        Map<String,Object> map = new HashMap<>();
+        User user = docService.getUserByDocid(docid);
+        map.put("user",user.getInfo());
+        return new JsonResult<>(map);
+    }
+
+    //进入编辑状态
+    @PostMapping("/enterEdit")
+    public JsonResult<Map<String, Object>> enterEdit(@RequestParam("userid") int userid,@RequestParam("docid") int docid) {
+        if(permsUtilService.canWrite(docid,userid)){
+            if(docService.isEditing(docid)){
+                int whoEditing = docService.getUseridFromEditrecord(docid);
+                User user = userService.getUserByUserId(whoEditing);
+                Map<String, Object> map = new HashMap<>();
+                map.put("user", user.getInfo());
+                return new JsonResult<>(map, "2", "有人正在编辑！");
+            }else{
+                Doc doc = docService.readDoc(docid, userid);
+                docService.addEditRecord(docid,userid);
+                boolean haveCollect = docService.haveCollect(docid, userid);
+                String returnHtml = HtmlUtils.htmlUnescape(doc.getContent());
+                doc.setContent(returnHtml);
+                User user = userService.getUserByUserId(userid);
+                Map<String, Object> map = new HashMap<>();
+                map.put("doc", doc);
+                map.put("user", user.getInfo());
+                map.put("haveCollect", haveCollect);
+                return new JsonResult<>(map);
+            }
+        }else{
+            return new JsonResult<>("1", "没有权限！");
+        }
     }
 
 }

@@ -43,5 +43,11 @@ public class JsonResult<T> {
         this.code = "0";
         this.msg = msg;
     }
+
+    public JsonResult(T data, String code,String msg) {
+        this.data = data;
+        this.code = code;
+        this.msg = msg;
+    }
 }
 

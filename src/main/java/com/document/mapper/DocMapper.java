@@ -1,6 +1,7 @@
 package com.document.mapper;
 
 import com.document.pojo.Doc;
+import com.document.pojo.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.omg.CORBA.OBJ_ADAPTER;
 import org.springframework.stereotype.Repository;
@@ -28,7 +29,7 @@ public interface DocMapper {
 
     Timestamp returnFirstHistory(Map<String,Object> map);
 
-    void writeDoc(Map<String,Object> map);
+    void saveDoc(Map<String,Object> map);
 
     int queryUseridByDocid(int docid);
 
@@ -71,4 +72,12 @@ public interface DocMapper {
     List<Map<String, Object>> getMyTemplateList(int userid);
 
     Map<String, Object> getTemplateByTemplateid(int templateid);
+
+    void addEditRecord(Map<String, Object> map);
+
+    Integer isEditing(int docid);
+
+    int getUseridFromEditrecord(int docid);
+
+    void editFinish(int docid, int userid);
 }

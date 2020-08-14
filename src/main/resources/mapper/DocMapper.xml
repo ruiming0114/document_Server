@@ -47,7 +47,7 @@
     </select>
 
     <!--writeDoc-->
-    <update id="writeDoc" parameterType="map">
+    <update id="saveDoc" parameterType="map">
         update doc set title=#{title},content=#{content},modifytime=#{modifytime}
         where docid=#{docid}
     </update>
@@ -163,5 +163,24 @@
         from template,user where templateid=#{templateid} and template.userid=user.userid;
     </select>
 
+    <!--addEditRecord-->
+    <insert id="addEditRecord" parameterType="map">
+        insert into editrecord (userid, docid, modifytime, finish) VALUES (#{userid},#{docid},#{modifytime},0)
+    </insert>
+
+    <!--isEditing-->
+    <select id="isEditing" parameterType="int" resultType="java.lang.Integer">
+        select userid from editrecord where docid=#{docid} and finish=0
+    </select>
+
+    <!--getUseridFromEditrecord-->
+    <select id="getUseridFromEditrecord" resultType="int" parameterType="int">
+        select userid from editrecord where docid=#{docid} and finish=0
+    </select>
+
+    <!--editFinish-->
+    <update id="editFinish" parameterType="int">
+        update editrecord set finish=1 where userid=#{userid} and docid=#{docid} and finish=0
+    </update>
 
 </mapper>

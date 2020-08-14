@@ -2,7 +2,9 @@ package com.document.service;
 
 import com.document.mapper.DocMapper;
 import com.document.mapper.PermsUtilMapper;
+import com.document.mapper.UserMapper;
 import com.document.pojo.Doc;
+import com.document.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.HtmlUtils;
@@ -17,6 +19,9 @@ public class DocServicelmpl implements DocService {
 
     @Autowired
     private DocMapper docMapper;
+
+    @Autowired
+    private UserMapper userMapper;
 
     @Autowired
     private PermsUtilMapper permsUtilMapper;
@@ -56,14 +61,14 @@ public class DocServicelmpl implements DocService {
     }
 
     @Override
-    public void writeDoc(int docid, String title, String content) {
+    public void saveDoc(int docid, String title, String content) {
         Map<String, Object> map = new HashMap<>();
         map.put("docid", docid);
         map.put("title", title);
         map.put("content", content);
         Timestamp currentTime = new Timestamp(System.currentTimeMillis());
         map.put("modifytime", currentTime);
-        docMapper.writeDoc(map);
+        docMapper.saveDoc(map);
     }
 
     @Override
@@ -176,5 +181,36 @@ public class DocServicelmpl implements DocService {
     @Override
     public Map<String,Object> getTemplateByTemplateid(int templateid) {
         return docMapper.getTemplateByTemplateid(templateid);
+    }
+
+    @Override
+    public User getUserByDocid(int docid) {
+        int userid = docMapper.queryUseridByDocid(docid);
+        return userMapper.getUserByUserId(userid);
+    }
+
+    @Override
+    public void addEditRecord(int docid, int userid) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("userid",userid);
+        map.put("docid",docid);
+        Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+        map.put("modifytime",currentTime);
+        docMapper.addEditRecord(map);
+    }
+
+    @Override
+    public boolean isEditing(int docid) {
+        return docMapper.isEditing(docid) != null;
+    }
+
+    @Override
+    public int getUseridFromEditrecord(int docid) {
+        return docMapper.getUseridFromEditrecord(docid);
+    }
+
+    @Override
+    public void editFinish(int docid, int userid) {
+        docMapper.editFinish(docid,userid);
     }
 }
