@@ -63,4 +63,12 @@ public interface DocMapper {
     List<Map<String, Object>> getOnlyCanWriteList(int docid);
 
     void addTemplate(Map<String, Object> map);
+
+    int getUseridByTemplateid(int templateid);
+
+    void deleteTemplate(int templateid);
+
+    List<Map<String, Object>> getMyTemplateList(int userid);
+
+    Map<String, Object> getTemplateByTemplateid(int templateid);
 }

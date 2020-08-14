@@ -38,4 +38,10 @@ public interface DocService {
     List<Map<String,Object>> getOnlyCanWriteList(int docid);
 
     void addTemplate(int userid, String title, String content);
+
+    boolean deleteTemplate(int userid, int templateid);
+
+    List<Map<String,Object>> getMyTemplateList(int userid);
+
+    Map<String,Object> getTemplateByTemplateid(int templateid);
 }

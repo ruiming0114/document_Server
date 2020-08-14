@@ -193,23 +193,38 @@ public class DocController {
         return new JsonResult<>(map);
     }
 
-    //保存模板
+    //新建模板
     @PostMapping("/addTemplate")
     public JsonResult<Map<String, Object>> addTemplate(@RequestParam("userid") int userid, @RequestParam("title") String title, @RequestParam("content") String content) {
-        docService.addTemplate(userid,title,content);
+        String temp = HtmlUtils.htmlEscapeHex(content);
+        docService.addTemplate(userid, title, temp);
         return new JsonResult<>("0", "保存成功！");
     }
 
     //删除模板
     @DeleteMapping("/deleteTemplate")
-    public JsonResult<Map<String, Object>> deleteTemplate(@RequestParam("userid") int userid, @RequestParam("templateid") String templateid) {
-        return new JsonResult<>("0", "删除成功！");
+    public JsonResult<Map<String, Object>> deleteTemplate(@RequestParam("userid") int userid, @RequestParam("templateid") int templateid) {
+        if (docService.deleteTemplate(userid, templateid))
+            return new JsonResult<>("0", "删除成功！");
+        else
+            return new JsonResult<>("1", "没有权限！");
     }
 
     //获取模板列表
-    @GetMapping("/getTemplateList")
-    public JsonResult<Map<String, Object>> getTemplateList(@RequestParam("userid") int userid) {
-        Map<String,Object> map = new HashMap<>();
+    @GetMapping("/getMyTemplateList")
+    public JsonResult<Map<String, Object>> getMyTemplateList(@RequestParam("userid") int userid) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("myTemplateList", docService.getMyTemplateList(userid));
         return new JsonResult<>(map);
     }
+
+    //查看模板
+    @GetMapping("/getTemplateByTemplateid")
+    public JsonResult<Map<String, Object>> getTemplateByTemplateid(@RequestParam("templateid") int templateid) {
+        Map<String, Object> map = docService.getTemplateByTemplateid(templateid);
+        String content = HtmlUtils.htmlUnescape((String) map.get("content"));
+        map.put("content",content);
+        return new JsonResult<>(map);
+    }
+
 }

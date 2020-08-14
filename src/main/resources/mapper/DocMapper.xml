@@ -142,4 +142,26 @@
         insert into template (userid, title, content) values (#{userid},#{title},#{content})
     </insert>
 
+    <!--getUseridByTemplateid-->
+    <select id="getUseridByTemplateid" parameterType="int" resultType="int">
+        select userid from template where templateid=#{templateid}
+    </select>
+
+    <!--deleteTemplate-->
+    <delete id="deleteTemplate" parameterType="int">
+        delete from template where templateid=#{templateid}
+    </delete>
+
+    <!--getMyTemplateList-->
+    <select id="getMyTemplateList" parameterType="int" resultType="java.util.HashMap">
+        select templateid as templateid,title as title from template where userid=#{userid}
+    </select>
+
+    <!--getTemplateByTemplateid-->
+    <select id="getTemplateByTemplateid" parameterType="int" resultType="java.util.HashMap">
+        select template.templateid as templateid,template.title as title,template.content as content,user.userid as userid,user.username as username,user.userimgpath as userimgpath
+        from template,user where templateid=#{templateid} and template.userid=user.userid;
+    </select>
+
+
 </mapper>

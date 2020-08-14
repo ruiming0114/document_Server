@@ -158,4 +158,23 @@ public class DocServicelmpl implements DocService {
         map.put("content",content);
         docMapper.addTemplate(map);
     }
+
+    @Override
+    public boolean deleteTemplate(int userid, int templateid) {
+        if(userid!=docMapper.getUseridByTemplateid(templateid))
+            return false;
+        else
+            docMapper.deleteTemplate(templateid);
+        return true;
+    }
+
+    @Override
+    public List<Map<String, Object>> getMyTemplateList(int userid) {
+        return docMapper.getMyTemplateList(userid);
+    }
+
+    @Override
+    public Map<String,Object> getTemplateByTemplateid(int templateid) {
+        return docMapper.getTemplateByTemplateid(templateid);
+    }
 }
