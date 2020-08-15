@@ -17,4 +17,6 @@ public interface TeamMapper {
 
     List<Map<String,Object>> getTeamMemberList(int teamid);
     List<Map<String,Object>> getTeamDocList(int teamid);
+
+    void deleteTeam(int teamid);
 }

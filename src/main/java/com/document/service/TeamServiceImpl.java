@@ -1,7 +1,10 @@
 package com.document.service;
 
+import com.document.mapper.DocMapper;
 import com.document.mapper.TeamMapper;
+import com.document.pojo.Doc;
 import com.document.pojo.Team;
+import com.document.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +20,9 @@ public class TeamServiceImpl implements TeamService{
 
     @Autowired
     PermsUtilService permsUtilService;
+
+    @Autowired
+    DocMapper docMapper;
 
     @Override
     public Team getTeamByTeamId(int teamid) {
@@ -52,5 +58,18 @@ public class TeamServiceImpl implements TeamService{
     @Override
     public List<Map<String, Object>> getTeamDocList(int teamid) {
         return teamMapper.getTeamDocList(teamid);
+    }
+
+    @Override
+    public void deleteTeam(int teamid) {
+        List<Map<String,Object>> memberList = teamMapper.getTeamMemberList(teamid);
+        for (Map<String,Object> member : memberList){
+            permsUtilService.deletePermsOfTeam(teamid, (Integer) member.get("userid"));
+        }
+        List<Map<String,Object>> docList = teamMapper.getTeamDocList(teamid);
+        for (Map<String,Object> doc : docList){
+            docMapper.deleteDocTotally((Integer) doc.get("docid"));
+        }
+        teamMapper.deleteTeam(teamid);
     }
 }

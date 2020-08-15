@@ -72,6 +72,11 @@
         update doc set status=1,deletetime=#{deletetime} where docid=#{docid}
     </update>
 
+    <!--deleteDocTotally-->
+    <update id="deleteDocTotally" parameterType="map">
+        update doc set status=2 where docid=#{docid}
+    </update>
+
     <!--recoverDoc-->
     <update id="recoverDoc" parameterType="int">
         update doc set status=0,deletetime=null where docid=#{docid}

@@ -23,4 +23,8 @@
     <select id="getTeamDocList" parameterType="int" resultType="java.util.HashMap">
         select docid,title,modifytime from doc where teamid=#{teamid} and status=0 order by modifytime desc
     </select>
+
+    <delete id="deleteTeam" parameterType="int">
+        delete from team where teamid=#{teamid}
+    </delete>
 </mapper>

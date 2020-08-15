@@ -147,4 +147,10 @@ public class TeamController {
         map.put("teaminfo",teamService.getTeamByTeamId(teamid));
         return new JsonResult<>(map);
     }
+
+    @DeleteMapping("/deleteTeam")
+    public JsonResult<Object> deleteTeam(@RequestParam("teamid") int teamid){
+        teamService.deleteTeam(teamid);
+        return new JsonResult<>("0","删除成功");
+    }
 }
