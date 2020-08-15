@@ -130,6 +130,7 @@ public class TeamController {
     public JsonResult<Object> getTeamMemberList(@RequestParam("teamid") int teamid){
         Map<String,Object> map = new HashMap<>();
         map.put("memberlist",teamService.getTeamMemberList(teamid));
+        map.put("leaderid",teamService.getTeamByTeamId(teamid).getLeaderid());
         return new JsonResult<>(map);
     }
 
