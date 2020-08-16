@@ -23,4 +23,7 @@ public interface UserMapper {
     List<Map<String,Object>> getMyDeleteDoc(int userid);
     List<Map<String,Object>> getCreatedTeam(int userid);
     List<Map<String,Object>> getJoinedTeam(int userid);
+    List<Map<String,Object>> getOthersCooperateDoc(int userid);
+    List<Map<String,Object>> getMyCooperateDoc(int userid);
+
 }

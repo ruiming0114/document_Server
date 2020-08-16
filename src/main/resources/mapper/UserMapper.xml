@@ -43,4 +43,16 @@
     <select id="getJoinedTeam" parameterType="int" resultType="java.util.HashMap">
         select team.teamid as teamid,team.teamname as teamname from team,teammember where team.teamid=teammember.teamid and teammember.userid=#{userid} and teammember.teamperms>0
     </select>
+
+    <select id="getMyCooperateDoc" parameterType="int" resultType="java.util.HashMap">
+        select doc.docid as docid,doc.title as title,doc.modifytime as modifytime from doc where doc.userid=#{userid} and doc.docid in
+            (
+                select perms.docid from perms group by perms.docid having count(*)>=2
+            )
+        order by modifytime desc
+    </select>
+
+    <select id="getOthersCooperateDoc" parameterType="int" resultType="java.util.HashMap">
+        select doc.docid as docid,doc.title as title,doc.modifytime as modifytime from doc,perms where perms.userid=#{userid} and doc.docid=perms.docid and doc.userid != #{userid} order by modifytime desc
+    </select>
 </mapper>

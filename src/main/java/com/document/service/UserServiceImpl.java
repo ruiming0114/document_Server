@@ -101,4 +101,14 @@ public class UserServiceImpl implements UserService {
     public List<Map<String, Object>> getJoinedTeam(int userid) {
         return userMapper.getJoinedTeam(userid);
     }
+
+    @Override
+    public List<Map<String, Object>> getOthersCooperateDoc(int userid) {
+        return userMapper.getOthersCooperateDoc(userid);
+    }
+
+    @Override
+    public List<Map<String, Object>> getMyCooperateDoc(int userid) {
+        return userMapper.getMyCooperateDoc(userid);
+    }
 }

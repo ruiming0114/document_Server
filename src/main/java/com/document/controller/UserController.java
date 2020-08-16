@@ -90,4 +90,18 @@ public class UserController {
         userService.updateUserImage(userid,userimgpath);
         return new JsonResult<>("0","修改成功");
     }
+
+    @GetMapping("/getMyCooperateDoc")
+    public JsonResult<Object> getMyCooperateDoc(@RequestParam("userid") int userid){
+        Map<String,Object> map = new HashMap<>();
+        map.put("Mycolist",userService.getMyCooperateDoc(userid));
+        return new JsonResult<>(map);
+    }
+
+    @GetMapping("/getOthersCooperateDoc")
+    public JsonResult<Object> getOthersCooperateDoc (@RequestParam("userid") int userid){
+        Map<String,Object> map = new HashMap<>();
+        map.put("Otherscolist",userService.getOthersCooperateDoc(userid));
+        return new JsonResult<>(map);
+    }
 }
