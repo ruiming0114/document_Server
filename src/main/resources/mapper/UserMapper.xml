@@ -41,6 +41,6 @@
     </select>
 
     <select id="getJoinedTeam" parameterType="int" resultType="java.util.HashMap">
-        select team.teamid as teamid,team.teamname as teamname from team,teammember where team.teamid=teammember.teamid and teammember.userid=#{userid}
+        select team.teamid as teamid,team.teamname as teamname from team,teammember where team.teamid=teammember.teamid and teammember.userid=#{userid} and teammember.teamperms>0
     </select>
 </mapper>
