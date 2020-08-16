@@ -163,6 +163,9 @@ public class DocController {
     @PutMapping("/replacePermsByUserid")
     public JsonResult<Map<String, Object>> replacePermsByUserid(@RequestParam("doid") int doid, @RequestParam("doneid") int doneid, @RequestParam("privateperms") int privateperms, @RequestParam("docid") int docid) {
         if (permsUtilService.canDelete(docid, doid)) {
+            if(permsUtilService.canDelete(docid,doneid)){
+                return new JsonResult<>("2", "不能更改创建者或队长对此文档的权限！");
+            }
             docService.replacePermsByUserid(docid, doneid, privateperms);
             return new JsonResult<>();
         } else {
