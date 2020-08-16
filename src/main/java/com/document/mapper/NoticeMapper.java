@@ -12,7 +12,7 @@ import java.util.Map;
 public interface NoticeMapper {
 
     Notice getNoticeById(int noticeid);
-    List<Notice> getNoticeByUser(int userid);
+    List<Notice> getReadNoticeByUser(int userid);
     List<Notice> getUnreadNoticeByUser(int userid);
 
     void addNotice(Map<String,Object> map);

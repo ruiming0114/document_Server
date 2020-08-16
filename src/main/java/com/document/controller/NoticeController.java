@@ -31,10 +31,10 @@ public class NoticeController {
         return new JsonResult<>("0","删除成功");
     }
 
-    @GetMapping("/getNoticeByUser")
-    public JsonResult<Object> getNoticeByUser(@RequestParam("userid") int userid){
+    @GetMapping("/getReadNoticeByUser")
+    public JsonResult<Object> getReadNoticeByUser(@RequestParam("userid") int userid){
         Map<String,Object> map = new HashMap<>();
-        map.put("noticelist",noticeService.getNoticeByUser(userid));
+        map.put("readnoticelist",noticeService.getReadNoticeByUser(userid));
         return new JsonResult<>(map);
     }
 

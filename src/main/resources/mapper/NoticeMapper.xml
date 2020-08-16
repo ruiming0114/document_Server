@@ -8,12 +8,12 @@
         select * from notice where noticeid=#{noticeid}
     </select>
 
-    <select id="getNoticeByUser" parameterType="int" resultType="Notice">
-        select * from notice where userid=#{userid}
+    <select id="getReadNoticeByUser" parameterType="int" resultType="Notice">
+        select * from notice where userid=#{userid} and status>0 order by noticeid desc
     </select>
 
     <select id="getUnreadNoticeByUser" parameterType="int" resultType="Notice">
-        select * from notice where userid=#{userid} and status=0
+        select * from notice where userid=#{userid} and status=0 order by noticeid desc
     </select>
 
 

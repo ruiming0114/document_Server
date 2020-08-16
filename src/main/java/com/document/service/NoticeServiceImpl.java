@@ -14,6 +14,9 @@ import java.util.Map;
 public class NoticeServiceImpl implements NoticeService {
 
     @Autowired
+    UserService userService;
+
+    @Autowired
     NoticeMapper noticeMapper;
 
     @Override
@@ -22,8 +25,8 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     @Override
-    public List<Notice> getNoticeByUser(int userid) {
-        return noticeMapper.getNoticeByUser(userid);
+    public List<Notice> getReadNoticeByUser(int userid) {
+        return noticeMapper.getReadNoticeByUser(userid);
     }
 
     @Override
@@ -44,6 +47,108 @@ public class NoticeServiceImpl implements NoticeService {
         map.put("type",1);
         map.put("addtime",addTime);
         map.put("teamid",teamid);
+        map.put("docid",-1);
+        noticeMapper.addNotice(map);
+    }
+
+    @Override
+    public void addMemberNotice_join(int userid, String teamname) {
+        Map<String,Object> map = new HashMap<>();
+        String title = "加入团队成功";
+        String content = "您已成功加入["+teamname+"]团队！";
+        Timestamp addTime = new Timestamp(System.currentTimeMillis());
+        map.put("userid",userid);
+        map.put("title",title);
+        map.put("content",content);
+        map.put("status",0);
+        map.put("type",2);
+        map.put("addtime",addTime);
+        map.put("teamid",-1);
+        map.put("docid",-1);
+        noticeMapper.addNotice(map);
+    }
+
+    @Override
+    public void addMemberNotice_quit(int userid, String teamname) {
+        Map<String,Object> map = new HashMap<>();
+        String title = "退出团队成功";
+        String content = "您已成功退出["+teamname+"]团队！";
+        Timestamp addTime = new Timestamp(System.currentTimeMillis());
+        map.put("userid",userid);
+        map.put("title",title);
+        map.put("content",content);
+        map.put("status",0);
+        map.put("type",2);
+        map.put("addtime",addTime);
+        map.put("teamid",-1);
+        map.put("docid",-1);
+        noticeMapper.addNotice(map);
+    }
+
+    @Override
+    public void addMemberNotice_tick(int userid, String teamname,String leadername) {
+        Map<String,Object> map = new HashMap<>();
+        String title = "移出团队通知";
+        String content = "您已被团队管理员["+leadername+"]移出团队["+teamname+"]。";
+        Timestamp addTime = new Timestamp(System.currentTimeMillis());
+        map.put("userid",userid);
+        map.put("title",title);
+        map.put("content",content);
+        map.put("status",0);
+        map.put("type",2);
+        map.put("addtime",addTime);
+        map.put("teamid",-1);
+        map.put("docid",-1);
+        noticeMapper.addNotice(map);
+    }
+
+    @Override
+    public void addMemberNotice_delete(int userid, String teamname) {
+        Map<String,Object> map = new HashMap<>();
+        String title = "解散团队通知";
+        String content = "您所在的团队["+teamname+"]已被团队管理员解散。";
+        Timestamp addTime = new Timestamp(System.currentTimeMillis());
+        map.put("userid",userid);
+        map.put("title",title);
+        map.put("content",content);
+        map.put("status",0);
+        map.put("type",2);
+        map.put("addtime",addTime);
+        map.put("teamid",-1);
+        map.put("docid",-1);
+        noticeMapper.addNotice(map);
+    }
+
+    @Override
+    public void addCommentNotice(int userid, int docid, String username, String doctitle) {
+        Map<String,Object> map = new HashMap<>();
+        String title = "来自文档["+doctitle+"]的新评论";
+        String content = "用户["+username+"]刚刚评论了您的文档["+doctitle+"]。";
+        Timestamp addTime = new Timestamp(System.currentTimeMillis());
+        map.put("userid",userid);
+        map.put("title",title);
+        map.put("content",content);
+        map.put("status",0);
+        map.put("type",3);
+        map.put("addtime",addTime);
+        map.put("teamid",-1);
+        map.put("docid",docid);
+        noticeMapper.addNotice(map);
+    }
+
+    @Override
+    public void addWelcomeNotice(int userid) {
+        Map<String,Object> map = new HashMap<>();
+        String title = "注册成功";
+        String content = "["+userService.getUserByUserId(userid).getUsername()+"]，你好！欢迎使用金刚石文档，使用过程中如遇问题请点击帮助中心获取帮助。";
+        Timestamp addTime = new Timestamp(System.currentTimeMillis());
+        map.put("userid",userid);
+        map.put("title",title);
+        map.put("content",content);
+        map.put("status",0);
+        map.put("type",2);
+        map.put("addtime",addTime);
+        map.put("teamid",-1);
         map.put("docid",-1);
         noticeMapper.addNotice(map);
     }

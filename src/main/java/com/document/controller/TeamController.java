@@ -82,6 +82,7 @@ public class TeamController {
         else {
             permsUtilService.updateTeamPerms(teamid,userid,1);
             noticeService.updateNoticeStatus(noticeid,2);
+            noticeService.addMemberNotice_join(userid,teamService.getTeamByTeamId(teamid).getTeamname());
             return new JsonResult<>("0","同意，加入团队");
         }
     }
@@ -108,7 +109,23 @@ public class TeamController {
         }
         else {
             teamService.quitTeam(userid,teamid);
+            noticeService.addMemberNotice_quit(userid,teamService.getTeamByTeamId(teamid).getTeamname());
             return new JsonResult<>("0","退出成功");
+        }
+    }
+
+    @DeleteMapping("/tickTeam")
+    public JsonResult<Object> tickTeam(@RequestParam("teamid") int teamid,@RequestParam("userid") int userid){
+        if (permsUtilService.queryTeamPerms(teamid,userid)==0){
+            return new JsonResult<>("1","未加入团队");
+        }
+        else if (teamService.getTeamByTeamId(teamid).getLeaderid()==userid){
+            return new JsonResult<>("2","创建者不能退出，只能解散团队");
+        }
+        else {
+            teamService.quitTeam(userid,teamid);
+            noticeService.addMemberNotice_tick(userid,teamService.getTeamByTeamId(teamid).getTeamname(),userService.getUserByUserId(teamService.getTeamByTeamId(teamid).getLeaderid()).getUsername());
+            return new JsonResult<>("0","操作成功");
         }
     }
 

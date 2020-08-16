@@ -71,6 +71,7 @@ public class TeamServiceImpl implements TeamService{
         List<Map<String,Object>> memberList = teamMapper.getTeamMemberList(teamid);
         for (Map<String,Object> member : memberList){
             permsUtilService.deletePermsOfTeam(teamid, (Integer) member.get("userid"));
+            noticeService.addMemberNotice_delete((Integer)member.get("userid"),teamMapper.getTeamByTeamId(teamid).getTeamname());
         }
         List<Map<String,Object>> docList = teamMapper.getTeamDocList(teamid);
         for (Map<String,Object> doc : docList){

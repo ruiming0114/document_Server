@@ -2,6 +2,7 @@ package com.document.controller;
 
 import com.document.pojo.JsonResult;
 import com.document.pojo.User;
+import com.document.service.NoticeService;
 import com.document.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -18,6 +19,9 @@ public class LoginController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    NoticeService noticeService;
 
     @PostMapping("/login")
     public JsonResult<Object> login(@RequestParam("username") String username, @RequestParam("password") String password){
@@ -41,6 +45,7 @@ public class LoginController {
             return new JsonResult<>("1","用户名重复");
         }
         userService.addUser(username,password,email,wechat);
+        noticeService.addWelcomeNotice(userService.getUserByUserName(username).getUserid());
         return new JsonResult<>("0","注册成功");
     }
 }

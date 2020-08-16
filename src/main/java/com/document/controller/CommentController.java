@@ -1,10 +1,8 @@
 package com.document.controller;
 
+import com.document.mapper.DocMapper;
 import com.document.pojo.JsonResult;
-import com.document.service.CommentService;
-import com.document.service.DocService;
-import com.document.service.PermsUtilService;
-import com.document.service.UserService;
+import com.document.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +11,9 @@ import java.util.Map;
 
 @RestController
 public class CommentController {
+
+    @Autowired
+    DocMapper docMapper;
 
     @Autowired
     private DocService docService;
@@ -24,6 +25,9 @@ public class CommentController {
     private CommentService commentService;
 
     @Autowired
+    NoticeService noticeService;
+
+    @Autowired
     private PermsUtilService permsUtilService;
 
     //添加评论
@@ -32,6 +36,7 @@ public class CommentController {
 
         if (permsUtilService.canComment(docid, userid)) {
             commentService.addComment(docid, userid, content);
+            noticeService.addCommentNotice(userid,docid,userService.getUserByUserId(userid).getUsername(),docMapper.queryDocByDocid(docid).getTitle());
             return new JsonResult<>();
         } else {
             return new JsonResult<>("1", "没有权限");
