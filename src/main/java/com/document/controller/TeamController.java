@@ -1,7 +1,9 @@
 package com.document.controller;
 
 import com.document.pojo.JsonResult;
+import com.document.pojo.Notice;
 import com.document.pojo.User;
+import com.document.service.NoticeService;
 import com.document.service.PermsUtilService;
 import com.document.service.TeamService;
 import com.document.service.UserService;
@@ -19,6 +21,9 @@ public class TeamController {
 
     @Autowired
     PermsUtilService permsUtilService;
+
+    @Autowired
+    NoticeService noticeService;
 
     @Autowired
     UserService userService;
@@ -70,23 +75,25 @@ public class TeamController {
     }
 
     @PutMapping("/agreeTeamInvitation")
-    public JsonResult<Object> agreeTeamInvitation(@RequestParam("teamid") int teamid ,@RequestParam("userid") int userid){
+    public JsonResult<Object> agreeTeamInvitation(@RequestParam("teamid") int teamid ,@RequestParam("userid") int userid, @RequestParam("noticeid") int noticeid){
         if (permsUtilService.queryTeamPerms(teamid,userid)!=-1){
             return new JsonResult<>("1","用户未被邀请");
         }
         else {
             permsUtilService.updateTeamPerms(teamid,userid,1);
+            noticeService.updateNoticeStatus(noticeid,2);
             return new JsonResult<>("0","同意，加入团队");
         }
     }
 
     @DeleteMapping("/disagreeTeamInvitation")
-    public JsonResult<Object> disagreeTeamInvitation(@RequestParam("teamid") int teamid ,@RequestParam("userid") int userid){
+    public JsonResult<Object> disagreeTeamInvitation(@RequestParam("teamid") int teamid ,@RequestParam("userid") int userid,@RequestParam("noticeid") int noticeid){
         if (permsUtilService.queryTeamPerms(teamid,userid)!=-1){
             return new JsonResult<>("1","用户未被邀请");
         }
         else {
             permsUtilService.deletePermsOfTeam(teamid,userid);
+            noticeService.updateNoticeStatus(noticeid,3);
             return new JsonResult<>("0","拒绝邀请");
         }
     }

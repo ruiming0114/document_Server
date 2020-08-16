@@ -8,4 +8,28 @@
         select * from notice where noticeid=#{noticeid}
     </select>
 
+    <select id="getNoticeByUser" parameterType="int" resultType="Notice">
+        select * from notice where userid=#{userid}
+    </select>
+
+    <select id="getUnreadNoticeByUser" parameterType="int" resultType="Notice">
+        select * from notice where userid=#{userid} and status=0
+    </select>
+
+
+    <insert id="addNotice" parameterType="map" useGeneratedKeys="true" keyColumn="noticeid">
+        insert into notice (userid,title,content,status,type,addtime,teamid,docid) values (#{userid},#{title},#{content},#{status},#{type},#{addtime},#{teamid},#{docid})
+    </insert>
+
+    <update id="updateNoticeStatus" parameterType="map">
+        update notice set status=#{status} where noticeid=#{noticeid}
+    </update>
+
+    <delete id="deleteNotice" parameterType="int">
+        delete from notice where noticeid=#{noticeid}
+    </delete>
+
+    <delete id="deleteNoticeByTeam" parameterType="int">
+        delete from notice where teamid=#{teamid}
+    </delete>
 </mapper>

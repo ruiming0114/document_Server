@@ -2,9 +2,7 @@ package com.document.service;
 
 import com.document.mapper.DocMapper;
 import com.document.mapper.TeamMapper;
-import com.document.pojo.Doc;
 import com.document.pojo.Team;
-import com.document.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +15,12 @@ public class TeamServiceImpl implements TeamService{
 
     @Autowired
     TeamMapper teamMapper;
+
+    @Autowired
+    NoticeService noticeService;
+
+    @Autowired
+    UserService userService;
 
     @Autowired
     PermsUtilService permsUtilService;
@@ -43,6 +47,8 @@ public class TeamServiceImpl implements TeamService{
     @Override
     public void inviteTeamMember(int userid, int teamid) {
         permsUtilService.addTeamPerms(teamid,userid,-1);
+        Team team = teamMapper.getTeamByTeamId(teamid);
+        noticeService.addTeamInvitationNotice(userid,team.getTeamname(),userService.getUserByUserId(team.getLeaderid()).getUsername(),teamid);
     }
 
     @Override
@@ -70,6 +76,7 @@ public class TeamServiceImpl implements TeamService{
         for (Map<String,Object> doc : docList){
             docMapper.deleteDocTotally((Integer) doc.get("docid"));
         }
+        noticeService.deleteNoticeByTeam(teamid);
         teamMapper.deleteTeam(teamid);
     }
 }
