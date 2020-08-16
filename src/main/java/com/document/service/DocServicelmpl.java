@@ -81,6 +81,11 @@ public class DocServicelmpl implements DocService {
     }
 
     @Override
+    public void deleteDocTotally(int docid) {
+        docMapper.deleteDocTotally(docid);
+    }
+
+    @Override
     public void recoverDoc(int docid) {
         docMapper.recoverDoc(docid);
     }

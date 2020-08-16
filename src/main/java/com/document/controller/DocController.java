@@ -93,6 +93,17 @@ public class DocController {
 
     }
 
+    //彻底删除文档
+    @DeleteMapping("/deleteDocTotally")
+    public JsonResult<Map<String, Object>> deleteDocTotally(@RequestParam("userid") int userid, @RequestParam("docid") int docid) {
+        if (permsUtilService.canDelete(docid, userid)) {
+            docService.deleteDocTotally(docid);
+            return new JsonResult<>();
+        } else {
+            return new JsonResult<>("1", "没有权限");
+        }
+    }
+
     //恢复文档
     @PutMapping("/recoverDoc")
     public JsonResult<Map<String, Object>> recoverDoc(@RequestParam("userid") int userid, @RequestParam("docid") int docid) {
@@ -163,7 +174,7 @@ public class DocController {
     @PutMapping("/replacePermsByUserid")
     public JsonResult<Map<String, Object>> replacePermsByUserid(@RequestParam("doid") int doid, @RequestParam("doneid") int doneid, @RequestParam("privateperms") int privateperms, @RequestParam("docid") int docid) {
         if (permsUtilService.canDelete(docid, doid)) {
-            if(permsUtilService.canDelete(docid,doneid)){
+            if (permsUtilService.canDelete(docid, doneid)) {
                 return new JsonResult<>("2", "不能更改创建者或队长对此文档的权限！");
             }
             docService.replacePermsByUserid(docid, doneid, privateperms);
@@ -237,6 +248,7 @@ public class DocController {
         map.put("myTemplateList", docService.getMyTemplateList(userid));
         return new JsonResult<>(map);
     }
+
     //获取团队模板列表
     @GetMapping("/getTeamTeamplateList")
     public JsonResult<Map<String, Object>> getTeamTeamplateList(@RequestParam("teamid") int teamid) {
@@ -244,7 +256,6 @@ public class DocController {
         map.put("teamTeamplateList", docService.getTeamTeamplateList(teamid));
         return new JsonResult<>(map);
     }
-
 
     //查看模板
     @GetMapping("/getTemplateByTemplateid")

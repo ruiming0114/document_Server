@@ -14,6 +14,7 @@ public interface DocService {
     void saveDoc(int docid,String title,String content);
 
     void deleteDoc(int docid);
+    void deleteDocTotally(int docid);
     void recoverDoc(int docid);
     boolean haveDelete(int docid);
 
