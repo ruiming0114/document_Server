@@ -206,7 +206,15 @@ public class DocController {
     @PostMapping("/addTemplate")
     public JsonResult<Map<String, Object>> addTemplate(@RequestParam("userid") int userid, @RequestParam("title") String title, @RequestParam("content") String content) {
         String temp = HtmlUtils.htmlEscapeHex(content);
-        docService.addTemplate(userid, title, temp);
+        docService.addTemplate(userid, title, temp, -1);
+        return new JsonResult<>("0", "保存成功！");
+    }
+
+    //新建团队模板
+    @PostMapping("/addTeamTemplate")
+    public JsonResult<Map<String, Object>> addTeamTemplate(@RequestParam("userid") int userid, @RequestParam("title") String title, @RequestParam("content") String content, @RequestParam("teamid") int teamid) {
+        String temp = HtmlUtils.htmlEscapeHex(content);
+        docService.addTemplate(userid, title, temp, teamid);
         return new JsonResult<>("0", "保存成功！");
     }
 
@@ -226,6 +234,14 @@ public class DocController {
         map.put("myTemplateList", docService.getMyTemplateList(userid));
         return new JsonResult<>(map);
     }
+    //获取团队模板列表
+    @GetMapping("/getTeamTeamplateList")
+    public JsonResult<Map<String, Object>> getTeamTeamplateList(@RequestParam("teamid") int teamid) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("teamTeamplateList", docService.getTeamTeamplateList(teamid));
+        return new JsonResult<>(map);
+    }
+
 
     //查看模板
     @GetMapping("/getTemplateByTemplateid")
@@ -276,8 +292,8 @@ public class DocController {
     //修改记录列表
     @GetMapping("/getModifyList")
     public JsonResult<Map<String, Object>> enterEdit(@RequestParam("docid") int docid) {
-        Map<String,Object> map = new HashMap<>();
-        map.put("modifyList",docService.getModifyList(docid));
+        Map<String, Object> map = new HashMap<>();
+        map.put("modifyList", docService.getModifyList(docid));
         return new JsonResult<>(map);
     }
 

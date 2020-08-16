@@ -144,7 +144,7 @@
 
     <!--addTemplate-->
     <insert id="addTemplate" parameterType="map" useGeneratedKeys="true" keyColumn="templateid">
-        insert into template (userid, title, content) values (#{userid},#{title},#{content})
+        insert into template (userid, title, content,teamid) values (#{userid},#{title},#{content},#{teamid})
     </insert>
 
     <!--getUseridByTemplateid-->
@@ -160,6 +160,11 @@
     <!--getMyTemplateList-->
     <select id="getMyTemplateList" parameterType="int" resultType="java.util.HashMap">
         select templateid as templateid,title as title from template where userid=#{userid}
+    </select>
+
+    <!--getTeamTeamplateList-->
+    <select id="getTeamTeamplateList" parameterType="int" resultType="java.util.HashMap">
+        select templateid as templateid,title as title from template where teamid=#{teamid}
     </select>
 
     <!--getTemplateByTemplateid-->

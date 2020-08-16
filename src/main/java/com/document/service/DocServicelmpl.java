@@ -132,11 +132,11 @@ public class DocServicelmpl implements DocService {
     }
 
     @Override
-    public void replacePermsByUserid(int docid, int doneid,int privateperms) {
+    public void replacePermsByUserid(int docid, int doneid, int privateperms) {
         Map<String, Object> map = new HashMap<>();
-        map.put("docid",docid);
-        map.put("userid",doneid);
-        map.put("privateperms",privateperms);
+        map.put("docid", docid);
+        map.put("userid", doneid);
+        map.put("privateperms", privateperms);
         docMapper.replacePermsByUserid(map);
     }
 
@@ -156,17 +156,18 @@ public class DocServicelmpl implements DocService {
     }
 
     @Override
-    public void addTemplate(int userid, String title, String content) {
+    public void addTemplate(int userid, String title, String content, int teamid) {
         Map<String, Object> map = new HashMap<>();
-        map.put("userid",userid);
-        map.put("title",title);
-        map.put("content",content);
+        map.put("userid", userid);
+        map.put("title", title);
+        map.put("content", content);
+        map.put("teamid", teamid);
         docMapper.addTemplate(map);
     }
 
     @Override
     public boolean deleteTemplate(int userid, int templateid) {
-        if(userid!=docMapper.getUseridByTemplateid(templateid))
+        if (userid != docMapper.getUseridByTemplateid(templateid))
             return false;
         else
             docMapper.deleteTemplate(templateid);
@@ -179,7 +180,12 @@ public class DocServicelmpl implements DocService {
     }
 
     @Override
-    public Map<String,Object> getTemplateByTemplateid(int templateid) {
+    public List<Map<String, Object>> getTeamTeamplateList(int teamid) {
+        return docMapper.getTeamTeamplateList(teamid);
+    }
+
+    @Override
+    public Map<String, Object> getTemplateByTemplateid(int templateid) {
         return docMapper.getTemplateByTemplateid(templateid);
     }
 
@@ -192,10 +198,10 @@ public class DocServicelmpl implements DocService {
     @Override
     public void addEditRecord(int docid, int userid) {
         Map<String, Object> map = new HashMap<>();
-        map.put("userid",userid);
-        map.put("docid",docid);
+        map.put("userid", userid);
+        map.put("docid", docid);
         Timestamp currentTime = new Timestamp(System.currentTimeMillis());
-        map.put("modifytime",currentTime);
+        map.put("modifytime", currentTime);
         docMapper.addEditRecord(map);
     }
 
@@ -211,7 +217,7 @@ public class DocServicelmpl implements DocService {
 
     @Override
     public void editFinish(int docid, int userid) {
-        docMapper.editFinish(docid,userid);
+        docMapper.editFinish(docid, userid);
     }
 
     @Override
