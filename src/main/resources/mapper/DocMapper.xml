@@ -201,7 +201,7 @@
 
     <!--getUserListByUsername-->
     <select id="getUserListByUsername" parameterType="String" resultType="java.util.HashMap">
-        select userid,username,userimgpath from user where username like concat(concat('%',#{username}),'%')
+        select userid,username,userimgpath,wechat from user where username like concat(concat('%',#{username}),'%')
     </select>
 
     <!--getRelatedDocByTitle-->
