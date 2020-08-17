@@ -30,7 +30,7 @@ public class LoginController {
         try {
             subject.login(usernamePasswordToken);
             User user = userService.getUserByUserName(username);
-            return new JsonResult<>(user.getInfo(),"登陆成功");
+            return new JsonResult<>(user.getInfo2(),"登陆成功");
         }catch (UnknownAccountException e){
             return new JsonResult<>("1","用户名不存在");
         }catch (IncorrectCredentialsException e){
@@ -39,12 +39,12 @@ public class LoginController {
     }
 
     @PostMapping("/register")
-    public JsonResult<Object> register(@RequestParam("username") String username, @RequestParam("password") String password, @RequestParam("email") String email,@RequestParam("wechat") String wechat){
+    public JsonResult<Object> register(@RequestParam("username") String username, @RequestParam("password") String password, @RequestParam("email") String email,@RequestParam("wechat") String wechat,@RequestParam("intro") String intro,@RequestParam("question") String question,@RequestParam("answer") String answer){
         User user = userService.getUserByUserName(username);
         if (user!=null){
             return new JsonResult<>("1","用户名重复");
         }
-        userService.addUser(username,password,email,wechat);
+        userService.addUser(username,password,email,wechat,intro,question,answer);
         noticeService.addWelcomeNotice(userService.getUserByUserName(username).getUserid());
         return new JsonResult<>("0","注册成功");
     }

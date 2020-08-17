@@ -21,13 +21,13 @@ public class UserController {
 
     @GetMapping("/getUserInfo")
     public JsonResult<Object> getUserInfo(@RequestParam("userid") int userid){
-        return new JsonResult<>(userService.getUserByUserId(userid).getInfo(),"查询成功");
+        return new JsonResult<>(userService.getUserByUserId(userid).getInfo2(),"查询成功");
     }
 
     @PutMapping("/updateUserInfo")
-    public JsonResult<Object> updateUserInfo(@RequestParam("userid") int userid,@RequestParam("email") String email,@RequestParam("wechat") String wechat){
-        userService.updateUserInfo(userid,email,wechat);
-        return new JsonResult<>(userService.getUserByUserId(userid).getInfo(),"修改成功");
+    public JsonResult<Object> updateUserInfo(@RequestParam("userid") int userid,@RequestParam("email") String email,@RequestParam("wechat") String wechat,@RequestParam("intro") String intro,@RequestParam("question") String question,@RequestParam("answer") String answer){
+        userService.updateUserInfo(userid,email,wechat,intro,question,answer);
+        return new JsonResult<>(userService.getUserByUserId(userid).getInfo2(),"修改成功");
     }
 
     @PutMapping("/alterPassword")

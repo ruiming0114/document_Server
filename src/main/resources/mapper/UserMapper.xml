@@ -13,11 +13,11 @@
     </select>
 
     <insert id="addUser" parameterType="map" useGeneratedKeys="true" keyColumn="userid">
-        insert into user (username,password,email,wechat,userimgpath) values (#{username},#{password},#{email},#{wechat},#{userimgpath})
+        insert into user (username,password,email,wechat,userimgpath,intro,question,answer) values (#{username},#{password},#{email},#{wechat},#{userimgpath},#{intro},#{question},#{answer})
     </insert>
 
     <update id="updateUser" parameterType="map">
-        update user set email=#{email}, wechat=#{wechat} , userimgpath=#{userimgpath} ,password=#{password} where userid=#{userid}
+        update user set email=#{email}, wechat=#{wechat} , userimgpath=#{userimgpath} ,password=#{password} ,intro=#{intro},question=#{question},answer=#{answer} where userid=#{userid}
     </update>
 
     <select id="getRecentReadDoc" parameterType="int" resultType="java.util.HashMap">

@@ -26,18 +26,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addUser(String username, String password, String email, String wechat) {
+    public void addUser(String username, String password, String email, String wechat,String intro,String question,String answer) {
         Map<String,Object> map = new HashMap<>();
         map.put("username",username);
         map.put("password",password);
         map.put("email",email);
         map.put("wechat",wechat);
         map.put("userimgpath","http://123.56.145.79:8090/user_images/default_userimage.jpg");
+        map.put("intro",intro);
+        map.put("question",question);
+        map.put("answer",answer);
         userMapper.addUser(map);
     }
 
     @Override
-    public void updateUserInfo(int userid,String email, String wechat) {
+    public void updateUserInfo(int userid,String email, String wechat,String intro,String question,String answer) {
         Map<String,Object> map = new HashMap<>();
         map.put("userid",userid);
         map.put("email",email);
@@ -45,6 +48,9 @@ public class UserServiceImpl implements UserService {
         User user = userMapper.getUserByUserId(userid);
         map.put("password",user.getPassword());
         map.put("userimgpath",user.getUserimgpath());
+        map.put("intro",intro);
+        map.put("question",question);
+        map.put("answer",answer);
         userMapper.updateUser(map);
     }
 
