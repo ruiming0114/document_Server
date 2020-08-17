@@ -203,4 +203,15 @@
     <select id="getUserListByUsername" parameterType="String" resultType="java.util.HashMap">
         select userid,username,userimgpath from user where username like concat(concat('%',#{username}),'%')
     </select>
+
+    <!--getRelatedDocByTitle-->
+    <select id="getRelatedDocByTitle" resultType="java.util.HashMap" parameterType="map">
+        select unionlist.docid,unionlist.title,unionlist.modifytime from(
+            select doc.docid,doc.title,doc.modifytime from doc,perms where perms.docid=doc.docid and perms.userid=#{userid} and doc.title like #{search} and doc.status=0
+            union
+            select doc.docid,doc.title,doc.modifytime from doc,collection where collection.docid=doc.docid and collection.userid=#{userid} and doc.title like #{search} and doc.status=0
+            union
+            select doc.docid,doc.title,doc.modifytime from teammember,doc where doc.teamid=teammember.teamid and teammember.userid=#{userid} and doc.title like #{search} and doc.status=0
+                                                                            )as unionlist
+    </select>
 </mapper>

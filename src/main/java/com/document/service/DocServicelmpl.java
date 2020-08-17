@@ -233,4 +233,12 @@ public class DocServicelmpl implements DocService {
     public List<Map<String, Object>> getUserByUsername(String username) {
         return docMapper.getUserListByUsername(username);
     }
+
+    @Override
+    public List<Map<String, Object>> getRelatedDocByTitle(int userid, String search) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("userid", userid);
+        map.put("search","%"+search+"%");
+        return docMapper.getRelatedDocByTitle(map);
+    }
 }

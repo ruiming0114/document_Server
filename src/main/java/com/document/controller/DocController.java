@@ -209,7 +209,7 @@ public class DocController {
     @GetMapping("/getUserByUsername")
     public JsonResult<Map<String, Object>> getUserByUsername(@RequestParam("username") String username) {
         Map<String, Object> map = new HashMap<>();
-        map.put("userList",docService.getUserByUsername(username) );
+        map.put("userList", docService.getUserByUsername(username));
         return new JsonResult<>(map);
     }
 
@@ -308,4 +308,11 @@ public class DocController {
         return new JsonResult<>(map);
     }
 
+    //与我有关的文档的搜索
+    @GetMapping("/getRelatedDocByTitle")
+    public JsonResult<Map<String, Object>> getRelatedDocByTitle(@RequestParam("userid") int userid,@RequestParam("search")String search) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("docList", docService.getRelatedDocByTitle(userid,search));
+        return new JsonResult<>(map);
+    }
 }
