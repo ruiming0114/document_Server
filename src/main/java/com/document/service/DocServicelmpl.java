@@ -7,7 +7,6 @@ import com.document.pojo.Doc;
 import com.document.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.util.HtmlUtils;
 
 import java.sql.Timestamp;
 import java.util.HashMap;
@@ -185,8 +184,8 @@ public class DocServicelmpl implements DocService {
     }
 
     @Override
-    public List<Map<String, Object>> getTeamTeamplateList(int teamid) {
-        return docMapper.getTeamTeamplateList(teamid);
+    public List<Map<String, Object>> getTeamTemplateList(int teamid) {
+        return docMapper.getTeamTemplateList(teamid);
     }
 
     @Override
@@ -228,5 +227,10 @@ public class DocServicelmpl implements DocService {
     @Override
     public List<Map<String, Object>> getModifyList(int docid) {
         return docMapper.getModifyList(docid);
+    }
+
+    @Override
+    public List<Map<String, Object>> getUserByUsername(String username) {
+        return docMapper.getUserListByUsername(username);
     }
 }

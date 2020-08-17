@@ -72,7 +72,7 @@ public interface DocMapper {
     void deleteTemplate(int templateid);
 
     List<Map<String, Object>> getMyTemplateList(int userid);
-    List<Map<String, Object>> getTeamTeamplateList(int teamid);
+    List<Map<String, Object>> getTeamTemplateList(int teamid);
 
     Map<String, Object> getTemplateByTemplateid(int templateid);
 
@@ -86,4 +86,5 @@ public interface DocMapper {
 
     List<Map<String, Object>> getModifyList(int docid);
 
+    List<Map<String, Object>> getUserListByUsername(String username);
 }

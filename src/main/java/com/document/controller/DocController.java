@@ -208,11 +208,8 @@ public class DocController {
     //根据username查找用户
     @GetMapping("/getUserByUsername")
     public JsonResult<Map<String, Object>> getUserByUsername(@RequestParam("username") String username) {
-        User user = userService.getUserByUserName(username);
-        if (user == null)
-            return new JsonResult<>("1", "没有符合条件的用户");
         Map<String, Object> map = new HashMap<>();
-        map.put("user", user.getInfo());
+        map.put("userList",docService.getUserByUsername(username) );
         return new JsonResult<>(map);
     }
 
@@ -250,10 +247,10 @@ public class DocController {
     }
 
     //获取团队模板列表
-    @GetMapping("/getTeamTeamplateList")
+    @GetMapping("/getTeamTemplateList")
     public JsonResult<Map<String, Object>> getTeamTeamplateList(@RequestParam("teamid") int teamid) {
         Map<String, Object> map = new HashMap<>();
-        map.put("teamTeamplateList", docService.getTeamTeamplateList(teamid));
+        map.put("teamTemplateList", docService.getTeamTemplateList(teamid));
         return new JsonResult<>(map);
     }
 

@@ -34,7 +34,7 @@ public interface DocService {
     boolean deleteTemplate(int userid, int templateid);
 
     List<Map<String,Object>> getMyTemplateList(int userid);
-    List<Map<String,Object>> getTeamTeamplateList(int teamid);
+    List<Map<String,Object>> getTeamTemplateList(int teamid);
 
     Map<String,Object> getTemplateByTemplateid(int templateid);
 
@@ -45,4 +45,6 @@ public interface DocService {
     int getUseridFromEditrecord(int docid);
     void editFinish(int docid, int userid);
     List<Map<String,Object>> getModifyList(int docid);
+
+    List<Map<String,Object>> getUserByUsername(String username);
 }

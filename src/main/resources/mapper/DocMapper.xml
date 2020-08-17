@@ -162,8 +162,8 @@
         select templateid as templateid,title as title from template where userid=#{userid}
     </select>
 
-    <!--getTeamTeamplateList-->
-    <select id="getTeamTeamplateList" parameterType="int" resultType="java.util.HashMap">
+    <!--getTeamTemplateList-->
+    <select id="getTeamTemplateList" parameterType="int" resultType="java.util.HashMap">
         select templateid as templateid,title as title from template where teamid=#{teamid}
     </select>
 
@@ -197,5 +197,10 @@
     <select id="getModifyList" parameterType="int" resultType="java.util.HashMap">
         select user.userid as userid,user.username as username,editrecord.modifytime from editrecord,user
         where editrecord.docid=#{docid} and user.userid=editrecord.userid and finish=1;
+    </select>
+
+    <!--getUserListByUsername-->
+    <select id="getUserListByUsername" parameterType="String" resultType="java.util.HashMap">
+        select userid,username,userimgpath from user where username like concat(concat('%',#{username}),'%')
     </select>
 </mapper>
