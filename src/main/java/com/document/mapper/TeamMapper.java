@@ -14,6 +14,7 @@ public interface TeamMapper {
 
     Team getTeamByTeamId(int teamid);
     void addTeam(Map<String,Object> map);
+    void updateTeam(Map<String,Object> map);
 
     List<Map<String,Object>> getTeamMemberList(int teamid);
     List<Map<String,Object>> getTeamDocList(int teamid);

@@ -178,4 +178,12 @@ public class TeamController {
         teamService.deleteTeam(teamid);
         return new JsonResult<>("0","删除成功");
     }
+
+    @PutMapping("/updateTeam")
+    public JsonResult<Object> updateTeam(@RequestParam("teamid") int teamid,@RequestParam("teamname") String teamname,@RequestParam("intro") String intro){
+        teamService.updateTeam(teamid,teamname,intro);
+        Map<String,Object> map = new HashMap<>();
+        map.put("teaminfo",teamService.getTeamByTeamId(teamid));
+        return new JsonResult<>(map);
+    }
 }

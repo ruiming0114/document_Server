@@ -27,4 +27,8 @@
     <delete id="deleteTeam" parameterType="int">
         delete from team where teamid=#{teamid}
     </delete>
+
+    <update id="updateTeam" parameterType="map">
+        update team set teamname=#{teamname} , intro=#{intro} where teamid=#{teamid}
+    </update>
 </mapper>

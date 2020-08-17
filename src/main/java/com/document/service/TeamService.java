@@ -12,6 +12,7 @@ public interface TeamService {
 
     void inviteTeamMember(int userid,int teamid);
     void quitTeam(int userid,int teamid);
+    void updateTeam(int teamid,String teamname,String intro);
 
     List<Map<String,Object>> getTeamMemberList(int teamid);
     List<Map<String,Object>> getTeamDocList(int teamid);

@@ -80,4 +80,13 @@ public class TeamServiceImpl implements TeamService{
         noticeService.deleteNoticeByTeam(teamid);
         teamMapper.deleteTeam(teamid);
     }
+
+    @Override
+    public void updateTeam(int teamid, String teamname, String intro) {
+        Map<String,Object> map = new HashMap<>();
+        map.put("teamid",teamid);
+        map.put("teamname",teamname);
+        map.put("intro",intro);
+        teamMapper.updateTeam(map);
+    }
 }
