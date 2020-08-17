@@ -63,6 +63,9 @@ public class UserServiceImpl implements UserService {
         map.put("email",user.getEmail());
         map.put("wechat",user.getWechat());
         map.put("password",user.getPassword());
+        map.put("intro",user.getIntro());
+        map.put("question",user.getQuestion());
+        map.put("answer",user.getAnswer());
         userMapper.updateUser(map);
     }
 
@@ -75,6 +78,9 @@ public class UserServiceImpl implements UserService {
         map.put("email",user.getEmail());
         map.put("userimgpath",user.getUserimgpath());
         map.put("wechat",user.getWechat());
+        map.put("intro",user.getIntro());
+        map.put("question",user.getQuestion());
+        map.put("answer",user.getAnswer());
         userMapper.updateUser(map);
     }
 

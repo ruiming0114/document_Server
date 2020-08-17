@@ -104,4 +104,21 @@ public class UserController {
         map.put("Otherscolist",userService.getOthersCooperateDoc(userid));
         return new JsonResult<>(map);
     }
+
+    @GetMapping("/getUserQuestionByUsername")
+    public JsonResult<Object> getUserQuestion(@RequestParam("username") String username){
+        User user = userService.getUserByUserName(username);
+        if (user==null){
+            return new JsonResult<>("1","用户不存在");
+        }
+        else {
+            return new JsonResult<>(user.getInfo2(),"查询成功");
+        }
+    }
+
+    @PutMapping("/setPassword")
+    public JsonResult<Object> setPassword(@RequestParam("password") String password,@RequestParam("userid") int userid){
+        userService.updateUserPwd(userid,password);
+        return new JsonResult<>("0","修改成功");
+    }
 }
