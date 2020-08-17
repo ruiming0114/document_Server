@@ -248,7 +248,7 @@ public class DocController {
 
     //获取团队模板列表
     @GetMapping("/getTeamTemplateList")
-    public JsonResult<Map<String, Object>> getTeamTeamplateList(@RequestParam("teamid") int teamid) {
+    public JsonResult<Map<String, Object>> getTeamTemplateList(@RequestParam("teamid") int teamid) {
         Map<String, Object> map = new HashMap<>();
         map.put("teamTemplateList", docService.getTeamTemplateList(teamid));
         return new JsonResult<>(map);
