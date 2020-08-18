@@ -82,7 +82,7 @@ public interface DocMapper {
 
     int getUseridFromEditrecord(int docid);
 
-    void editFinish(int docid, int userid);
+    void editFinish(Map<String, Object> map);
 
     List<Map<String, Object>> getModifyList(int docid);
 

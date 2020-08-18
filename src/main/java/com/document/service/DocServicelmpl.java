@@ -221,7 +221,12 @@ public class DocServicelmpl implements DocService {
 
     @Override
     public void editFinish(int docid, int userid) {
-        docMapper.editFinish(docid, userid);
+        Map<String, Object> map = new HashMap<>();
+        map.put("userid", userid);
+        map.put("docid", docid);
+        Timestamp modifytime = new Timestamp(System.currentTimeMillis());
+        map.put("modifytime",modifytime);
+        docMapper.editFinish(map);
     }
 
     @Override

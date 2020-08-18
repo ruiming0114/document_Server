@@ -189,8 +189,8 @@
     </select>
 
     <!--editFinish-->
-    <update id="editFinish" parameterType="int">
-        update editrecord set finish=1 where userid=#{userid} and docid=#{docid} and finish=0
+    <update id="editFinish" parameterType="map">
+        update editrecord set finish=1,modifytime=#{modifytime} where userid=#{userid} and docid=#{docid} and finish=0
     </update>
 
     <!--getModifyList-->
