@@ -214,4 +214,9 @@
             select doc.docid,doc.title,doc.modifytime from teammember,doc where doc.teamid=teammember.teamid and teammember.userid=#{userid} and doc.title like #{search} and doc.status=0
                                                                             )as unionlist
     </select>
+
+    <!--getTitleByDocid-->
+    <select id="getTitleByDocid" parameterType="int" resultType="String">
+        select title from doc where docid=#{docid}
+    </select>
 </mapper>

@@ -241,4 +241,9 @@ public class DocServicelmpl implements DocService {
         map.put("search","%"+search+"%");
         return docMapper.getRelatedDocByTitle(map);
     }
+
+    @Override
+    public String getTitleByDocid(int docid) {
+        return docMapper.getTitleByDocid(docid);
+    }
 }

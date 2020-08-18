@@ -94,7 +94,7 @@ public class DocController {
 
         if (permsUtilService.canDelete(docid, userid)) {
             docService.deleteDoc(docid);
-            noticeService.addDeleteDocNotice(userid,docMapper.queryDocByDocid(docid).getTitle());
+            noticeService.addDeleteDocNotice(userid, docMapper.queryDocByDocid(docid).getTitle());
             return new JsonResult<>();
         } else {
             return new JsonResult<>("1", "没有权限");
@@ -119,7 +119,7 @@ public class DocController {
 
         if (permsUtilService.canDelete(docid, userid)) {
             docService.recoverDoc(docid);
-            noticeService.addRecoverDocNotice(userid,docMapper.queryDocByDocid(docid).getTitle());
+            noticeService.addRecoverDocNotice(userid, docMapper.queryDocByDocid(docid).getTitle());
             return new JsonResult<>();
         } else {
             return new JsonResult<>("1", "没有权限");
@@ -187,10 +187,46 @@ public class DocController {
             if (permsUtilService.canDelete(docid, doneid)) {
                 return new JsonResult<>("2", "不能更改创建者或队长对此文档的权限！");
             }
-            docService.replacePermsByUserid(docid, doneid, privateperms);
-            return new JsonResult<>();
+            int permsInPerms = permsUtilService.queryPerms(docid, doneid);
+            if (permsInPerms < 0) {
+                return new JsonResult<>("3", "该用户已被邀请等待同意！");
+            } else if (permsInPerms > 0) {
+                docService.replacePermsByUserid(docid, doneid, privateperms);
+                return new JsonResult<>("4", "该用户在权限列表中，已直接修改为新权限！");
+            } else {
+                docService.replacePermsByUserid(docid, doneid, -1 * privateperms);
+                noticeService.addCooperateNotice(doneid, docService.getTitleByDocid(docid), docService.getUserByDocid(docid).getUsername(), docid);
+                return new JsonResult<>("0", "已发送邀请信息！");
+            }
         } else {
-            return new JsonResult<>("1", "没有权限");
+            return new JsonResult<>("1", "没有权限！");
+        }
+    }
+
+    //接受邀请
+    @PutMapping("/agreeCooperateInvitation")
+    public JsonResult<Map<String, Object>> agreeCooperateInvitation(@RequestParam("docid") int docid, @RequestParam("userid") int userid, @RequestParam("noticeid") int noticeid) {
+        int permsInPerms = permsUtilService.queryPerms(docid, userid);
+        if (permsInPerms >= 0) {
+            return new JsonResult<>("1", "用户未被邀请");
+        } else {
+            permsUtilService.updatePerms(docid, userid, -1 * permsInPerms);
+            noticeService.updateNoticeStatus(noticeid, 2);
+            noticeService.addCooperateNotice_agree(userid, docService.getTitleByDocid(docid), docService.getUserByDocid(docid).getUsername());
+            return new JsonResult<>("0", "已同意邀请");
+        }
+    }
+
+    //拒绝邀请
+    @DeleteMapping("/disagreeCooperateInvitation")
+    public JsonResult<Map<String, Object>> disagreeCooperateInvitation(@RequestParam("docid") int docid, @RequestParam("userid") int userid, @RequestParam("noticeid") int noticeid) {
+        int permsInPerms = permsUtilService.queryPerms(docid, userid);
+        if (permsInPerms >= 0) {
+            return new JsonResult<>("1", "用户未被邀请");
+        } else {
+            permsUtilService.deletePerms(docid, userid);
+            noticeService.updateNoticeStatus(noticeid, 3);
+            return new JsonResult<>("0", "拒绝邀请");
         }
     }
 
@@ -320,9 +356,9 @@ public class DocController {
 
     //与我有关的文档的搜索
     @GetMapping("/getRelatedDocByTitle")
-    public JsonResult<Map<String, Object>> getRelatedDocByTitle(@RequestParam("userid") int userid,@RequestParam("search")String search) {
+    public JsonResult<Map<String, Object>> getRelatedDocByTitle(@RequestParam("userid") int userid, @RequestParam("search") String search) {
         Map<String, Object> map = new HashMap<>();
-        map.put("docList", docService.getRelatedDocByTitle(userid,search));
+        map.put("docList", docService.getRelatedDocByTitle(userid, search));
         return new JsonResult<>(map);
     }
 }

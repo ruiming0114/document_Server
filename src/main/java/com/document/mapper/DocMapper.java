@@ -89,4 +89,6 @@ public interface DocMapper {
     List<Map<String, Object>> getUserListByUsername(String username);
 
     List<Map<String, Object>> getRelatedDocByTitle(Map<String, Object> map);
+
+    String getTitleByDocid(int docid);
 }
