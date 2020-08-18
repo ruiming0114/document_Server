@@ -196,7 +196,7 @@
     <!--getModifyList-->
     <select id="getModifyList" parameterType="int" resultType="java.util.HashMap">
         select user.userid as userid,user.username as username,editrecord.modifytime from editrecord,user
-        where editrecord.docid=#{docid} and user.userid=editrecord.userid and finish=1;
+        where editrecord.docid=#{docid} and user.userid=editrecord.userid and finish=1 order by editrecord.modifytime desc;
     </select>
 
     <!--getUserListByUsername-->
