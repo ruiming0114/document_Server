@@ -234,6 +234,9 @@ public class DocController {
     @DeleteMapping("/deletePerms")
     public JsonResult<Map<String, Object>> deletePerms(@RequestParam("doid") int doid, @RequestParam("doneid") int doneid, @RequestParam("docid") int docid) {
         if (permsUtilService.canDelete(docid, doid)) {
+            if(permsUtilService.canDelete(docid,doneid)) {
+                return new JsonResult<>("2", "不能删除创建者的权限");
+            }
             permsUtilService.deletePerms(docid, doneid);
             return new JsonResult<>();
         } else {
