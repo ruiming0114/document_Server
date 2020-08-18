@@ -17,6 +17,8 @@ public interface NoticeService {
     void addMemberNotice_delete(int userid,String teamname);
     void addCommentNotice(int userid,int docid,String username,String title);
     void addWelcomeNotice(int userid);
+    void addDeleteDocNotice(int userid,String doctitle);
+    void addRecoverDocNotice(int userid,String doctitle);
 
     void updateNoticeStatus(int noticeid,int status);
     void deleteNotice(int noticeid);

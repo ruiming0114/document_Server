@@ -154,6 +154,40 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     @Override
+    public void addDeleteDocNotice(int userid,String doctitle) {
+        Map<String,Object> map = new HashMap<>();
+        String title = "删除文档通知";
+        String content = "您的文档["+doctitle+"]已经删除，如需恢复请到回收站操作。";
+        Timestamp addTime = new Timestamp(System.currentTimeMillis());
+        map.put("userid",userid);
+        map.put("title",title);
+        map.put("content",content);
+        map.put("status",0);
+        map.put("type",2);
+        map.put("addtime",addTime);
+        map.put("teamid",-1);
+        map.put("docid",-1);
+        noticeMapper.addNotice(map);
+    }
+
+    @Override
+    public void addRecoverDocNotice(int userid, String doctitle) {
+        Map<String,Object> map = new HashMap<>();
+        String title = "恢复文档通知";
+        String content = "您的文档["+doctitle+"]已经从回收站中恢复。";
+        Timestamp addTime = new Timestamp(System.currentTimeMillis());
+        map.put("userid",userid);
+        map.put("title",title);
+        map.put("content",content);
+        map.put("status",0);
+        map.put("type",2);
+        map.put("addtime",addTime);
+        map.put("teamid",-1);
+        map.put("docid",-1);
+        noticeMapper.addNotice(map);
+    }
+
+    @Override
     public void updateNoticeStatus(int noticeid,int status) {
         Map<String,Object> map = new HashMap<>();
         map.put("noticeid",noticeid);

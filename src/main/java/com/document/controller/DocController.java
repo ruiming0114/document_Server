@@ -1,9 +1,11 @@
 package com.document.controller;
 
+import com.document.mapper.DocMapper;
 import com.document.pojo.Doc;
 import com.document.pojo.JsonResult;
 import com.document.pojo.User;
 import com.document.service.DocService;
+import com.document.service.NoticeService;
 import com.document.service.PermsUtilService;
 import com.document.service.UserService;
 import org.apache.ibatis.annotations.Delete;
@@ -25,6 +27,12 @@ public class DocController {
 
     @Autowired
     private PermsUtilService permsUtilService;
+
+    @Autowired
+    NoticeService noticeService;
+
+    @Autowired
+    DocMapper docMapper;
 
     //创建文档
     @PostMapping("/addDoc")
@@ -86,6 +94,7 @@ public class DocController {
 
         if (permsUtilService.canDelete(docid, userid)) {
             docService.deleteDoc(docid);
+            noticeService.addDeleteDocNotice(userid,docMapper.queryDocByDocid(docid).getTitle());
             return new JsonResult<>();
         } else {
             return new JsonResult<>("1", "没有权限");
@@ -110,6 +119,7 @@ public class DocController {
 
         if (permsUtilService.canDelete(docid, userid)) {
             docService.recoverDoc(docid);
+            noticeService.addRecoverDocNotice(userid,docMapper.queryDocByDocid(docid).getTitle());
             return new JsonResult<>();
         } else {
             return new JsonResult<>("1", "没有权限");
