@@ -19,6 +19,8 @@ public interface NoticeService {
     void addWelcomeNotice(int userid);
     void addDeleteDocNotice(int userid,String doctitle);
     void addRecoverDocNotice(int userid,String doctitle);
+    void addCooperateNotice(int userid,String doctitle,String author,int docid);
+    void addCooperateNotice_agree(int userid,String doctitle,String author);
 
     void updateNoticeStatus(int noticeid,int status);
     void deleteNotice(int noticeid);

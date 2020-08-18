@@ -188,6 +188,40 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     @Override
+    public void addCooperateNotice(int userid, String doctitle, String author, int docid) {
+        Map<String,Object> map = new HashMap<>();
+        String title = "新的文档协作邀请";
+        String content = "用户["+author+"]邀请您参与协作文档["+doctitle+"]，请确认是否同意协作？";
+        Timestamp addTime = new Timestamp(System.currentTimeMillis());
+        map.put("userid",userid);
+        map.put("title",title);
+        map.put("content",content);
+        map.put("status",0);
+        map.put("type",4);
+        map.put("addtime",addTime);
+        map.put("teamid",-1);
+        map.put("docid",docid);
+        noticeMapper.addNotice(map);
+    }
+
+    @Override
+    public void addCooperateNotice_agree(int userid, String doctitle, String author) {
+        Map<String,Object> map = new HashMap<>();
+        String title = "参与协作成功";
+        String content = "您接受了用户["+author+"]的邀请，参与协作文档["+doctitle+"]，文档内容可在收件箱中详细查看。";
+        Timestamp addTime = new Timestamp(System.currentTimeMillis());
+        map.put("userid",userid);
+        map.put("title",title);
+        map.put("content",content);
+        map.put("status",0);
+        map.put("type",2);
+        map.put("addtime",addTime);
+        map.put("teamid",-1);
+        map.put("docid",-1);
+        noticeMapper.addNotice(map);
+    }
+
+    @Override
     public void updateNoticeStatus(int noticeid,int status) {
         Map<String,Object> map = new HashMap<>();
         map.put("noticeid",noticeid);
