@@ -45,7 +45,7 @@
     </select>
 
     <select id="getMyCooperateDoc" parameterType="int" resultType="java.util.HashMap">
-        select doc.docid as docid,doc.title as title,doc.modifytime as modifytime from doc where doc.userid=#{userid} and doc.docid in
+        select doc.docid as docid,doc.title as title,doc.modifytime as modifytime from doc where doc.userid=#{userid} and doc.status=0 and doc.docid in
             (
                 select perms.docid from perms group by perms.docid having count(*)>=2
             )
@@ -53,6 +53,6 @@
     </select>
 
     <select id="getOthersCooperateDoc" parameterType="int" resultType="java.util.HashMap">
-        select doc.docid as docid,doc.title as title,doc.modifytime as modifytime from doc,perms where perms.userid=#{userid} and doc.docid=perms.docid and doc.userid != #{userid} order by modifytime desc
+        select doc.docid as docid,doc.title as title,doc.modifytime as modifytime from doc,perms where perms.userid=#{userid} and doc.docid=perms.docid and doc.userid != #{userid} and doc.status=0 order by modifytime desc
     </select>
 </mapper>
