@@ -140,7 +140,7 @@ public class NoticeServiceImpl implements NoticeService {
     public void addWelcomeNotice(int userid) {
         Map<String,Object> map = new HashMap<>();
         String title = "注册成功";
-        String content = "["+userService.getUserByUserId(userid).getUsername()+"]，你好！欢迎使用金刚石文档，使用过程中如遇问题请点击帮助中心获取帮助。";
+        String content = "["+userService.getUserByUserId(userid).getUsername()+"]，你好！欢迎使用陨石文档，使用过程中如遇问题请点击帮助中心获取帮助。";
         Timestamp addTime = new Timestamp(System.currentTimeMillis());
         map.put("userid",userid);
         map.put("title",title);
