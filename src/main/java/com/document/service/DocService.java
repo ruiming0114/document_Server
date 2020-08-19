@@ -51,4 +51,6 @@ public interface DocService {
     List<Map<String,Object>> getRelatedDocByTitle(int userid, String search);
 
     String getTitleByDocid(int docid);
+
+    int getReadNum(int docid);
 }

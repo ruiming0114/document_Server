@@ -61,6 +61,7 @@ public class DocController {
             String returnHtml = HtmlUtils.htmlUnescape(doc.getContent());
             doc.setContent(returnHtml);
             User user = userService.getUserByUserId(userid);
+            int numOfRead = docService.getReadNum(docid);
             Map<String, Object> map = new HashMap<>();
             map.put("doc", doc);
             map.put("user", user.getInfo());
@@ -69,6 +70,7 @@ public class DocController {
             map.put("haveCollect", haveCollect);
             map.put("isEditing", isEditing);
             map.put("whoIsEditing", whoIsEditing);
+            map.put("numOfRead",numOfRead);
             return new JsonResult<>(map);
         } else {
             return new JsonResult<>("1", "没有权限");

@@ -251,4 +251,9 @@ public class DocServicelmpl implements DocService {
     public String getTitleByDocid(int docid) {
         return docMapper.getTitleByDocid(docid);
     }
+
+    @Override
+    public int getReadNum(int docid) {
+        return docMapper.getReadNum(docid);
+    }
 }

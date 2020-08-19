@@ -91,4 +91,6 @@ public interface DocMapper {
     List<Map<String, Object>> getRelatedDocByTitle(Map<String, Object> map);
 
     String getTitleByDocid(int docid);
+
+    int getReadNum(int docid);
 }
